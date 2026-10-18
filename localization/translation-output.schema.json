@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "chunk": {"type": "integer"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "translation": {"type": "string"}
+        },
+        "required": ["id", "translation"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["chunk", "items"],
+  "additionalProperties": false
+}

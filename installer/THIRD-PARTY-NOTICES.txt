@@ -1,0 +1,7 @@
+BepInEx 5.4.23.5
+Copyright (c) BepInEx contributors
+Upstream: https://github.com/BepInEx/BepInEx/releases/tag/v5.4.23.5
+License: MIT License
+
+The package redistributes the unmodified official Windows x64 BepInEx runtime.
+The complete upstream license text is included as BepInEx-LICENSE.txt.

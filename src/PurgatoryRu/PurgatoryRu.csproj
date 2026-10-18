@@ -10,6 +10,14 @@
     <BepInExDir Condition="'$(BepInExDir)' == ''">$(MSBuildProjectDirectory)\..\..\reference\ptbr-v1.0.0\BepInEx\core</BepInExDir>
   </PropertyGroup>
 
+  <!-- Public release binaries must not embed local PDB/source paths. -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <Deterministic>true</Deterministic>
+    <PathMap>$(MSBuildProjectDirectory)=/_/PurgatoryRu</PathMap>
+  </PropertyGroup>
+
   <ItemGroup>
     <Reference Include="BepInEx">
       <HintPath>$(BepInExDir)\BepInEx.dll</HintPath>

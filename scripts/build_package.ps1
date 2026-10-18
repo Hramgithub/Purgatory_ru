@@ -20,6 +20,10 @@ $Archive = Join-Path $OutRoot "Purgatory-RU-$Version.zip"
 foreach ($required in @($SourceZip, $PluginDll, $Story, $UiReport, $SummaryReport, $RenownReport, $EditorialReport)) {
     if (!(Test-Path -LiteralPath $required)) { throw "Required file missing: $required" }
 }
+$Python = Join-Path $Root '.venv\Scripts\python.exe'
+if (!(Test-Path -LiteralPath $Python)) { $Python = 'python' }
+& $Python (Join-Path $Root 'scripts\verify_release_privacy.py') $PluginDll
+if ($LASTEXITCODE -ne 0) { throw 'Release DLL contains private paths or symbols.' }
 $storyHash = (Get-FileHash -LiteralPath $Story -Algorithm SHA256).Hash
 foreach ($reportPath in @($SummaryReport, $RenownReport)) {
     $runtimeQa = Get-Content -Raw -LiteralPath $reportPath | ConvertFrom-Json
@@ -92,6 +96,8 @@ $manifest = [ordered]@{
 }
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $Stage 'manifest.json') -Encoding UTF8
 
+& $Python (Join-Path $Root 'scripts\verify_release_privacy.py') $Stage
+if ($LASTEXITCODE -ne 0) { throw 'Package privacy verification failed.' }
 if (Test-Path -LiteralPath $Archive) { Remove-Item -LiteralPath $Archive -Force }
 Compress-Archive -LiteralPath $Stage -DestinationPath $Archive -CompressionLevel Optimal
 Get-FileHash -LiteralPath $Archive -Algorithm SHA256

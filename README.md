@@ -10,6 +10,8 @@ Ink-сценарий `wod02`. Файлы игры не патчатся и не 
 
 ## Установка
 
+Актуальная beta-версия: [v0.1.1](https://github.com/Hramgithub/Purgatory_ru/releases/tag/v0.1.1).
+
 1. Скачайте архив релиза `Purgatory-RU-<версия>.zip`.
 2. Полностью распакуйте его.
 3. Закройте игру и запустите `install.bat`.
@@ -45,6 +47,19 @@ dotnet build .\src\PurgatoryRu\PurgatoryRu.csproj -c Release
 Для сборки DLL нужны установленные файлы игры и reference assemblies BepInEx.
 Официальный BepInEx 5.4.23.5 x64 загружается отдельно и не берётся из чужих
 фанатских переводов.
+
+Перевод хранится в `localization/ru/chunk-*.json`. Для повторной сборки сценария
+из собственного извлечённого `wod02` используйте:
+
+```powershell
+python .\scripts\assemble_codex_translation.py <original-wod02.json> localization dist/content/wod02.json --report dist/assembly-report.json
+```
+
+`localization/index.json` содержит адреса строк, хеши и плейсхолдеры, поэтому
+исходный английский сценарий не требуется публиковать в репозитории.
+
+Визуально проверено начало игры; полное прохождение всех веток пока не выполнено.
+Главное меню, заставки глав и статические элементы HUD остаются на английском.
 
 ## Правовой статус
 

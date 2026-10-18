@@ -195,7 +195,10 @@ def mask_text(text: str, protected: list[str]) -> tuple[str, dict[str, str]]:
             index = text.find(phrase, start)
             if index < 0:
                 break
-            tokens.append((index, index + len(phrase), phrase))
+            end = index + len(phrase)
+            if ((index == 0 or not text[index - 1].isalnum())
+                    and (end == len(text) or not text[end].isalnum())):
+                tokens.append((index, end, phrase))
             start = index + len(phrase)
     selected: list[tuple[int, int, str]] = []
     for token in sorted(tokens, key=lambda item: (item[0], -(item[1] - item[0]))):

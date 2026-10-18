@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$Version = '0.1.0'
+    [string]$Version = '0.1.1'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -27,6 +27,13 @@ Copy-Item -LiteralPath $Story -Destination (Join-Path $PluginDir 'wod02.json')
 Copy-Item -Path (Join-Path $Root 'installer\*') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'COMPATIBILITY.md') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'GLOSSARY.md') -Destination $Stage -Force
+Copy-Item -LiteralPath (Join-Path $Root 'QA_REPORT.md') -Destination $Stage -Force
+
+# Windows PowerShell 5.1 (used by install.bat) requires a BOM for Cyrillic.
+Get-ChildItem -LiteralPath $Stage -Filter '*.ps1' -File | ForEach-Object {
+    $scriptText = [System.IO.File]::ReadAllText($_.FullName)
+    [System.IO.File]::WriteAllText($_.FullName, $scriptText, [System.Text.UTF8Encoding]::new($true))
+}
 
 $files = Get-ChildItem -LiteralPath $Stage -Recurse -File | ForEach-Object {
     [ordered]@{

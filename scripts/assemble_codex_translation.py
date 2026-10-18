@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -12,6 +13,8 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from translate_ink_gpt import load_json, replace_strings, unmask_text  # noqa: E402
+from renderer_commands import command_arguments
+from translation_catalog import load_catalog
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -44,7 +47,8 @@ def main() -> int:
     args = parser.parse_args()
 
     story = load_json(args.source)
-    catalog = load_json(args.localization_dir / "catalog.json")
+    arguments = command_arguments(story)
+    catalog = load_catalog(args.localization_dir, story)
     by_id = {int(item["id"]): item for item in catalog}
     translated: dict[int, str] = {}
     errors: list[str] = []
@@ -64,6 +68,11 @@ def main() -> int:
                     raise ValueError("duplicate id")
                 source_item = by_id[item_id]
                 unmasked = unmask_text(text, source_item["mask"])
+                marker = re.match(r"^(?:HEADER|INFO|SMALL|MARGIN|INV|STYLE [A-Z]+):", source_item["body"])
+                if marker and not unmasked.startswith(marker[0]):
+                    raise ValueError("game renderer command prefix changed")
+                if source_item["source"] in arguments and unmasked.count('"') != source_item["body"].count('"'):
+                    raise ValueError("game command quote delimiters changed")
                 if unmasked.count("|") != source_item["body"].count("|"):
                     raise ValueError("pipe separator count changed")
                 if unmasked.count("\n") != source_item["body"].count("\n"):

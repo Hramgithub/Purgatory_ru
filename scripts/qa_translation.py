@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from translate_ink_gpt import KNOWN_CHARACTER_NAMES, SKILLS_AND_GIFTS, load_json, walk
+from renderer_commands import command_arguments
+from translation_catalog import load_catalog
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -38,7 +40,8 @@ def same_shape(left: Any, right: Any, path: tuple[Any, ...] = ()) -> Iterable[st
 
 
 def count_occurrences(story: Any, term: str) -> int:
-    return sum(value.count(term) for _, value in walk(story) if isinstance(value, str))
+    pattern = re.compile(r"(?<!\w)" + re.escape(term) + r"(?!\w)")
+    return sum(len(pattern.findall(value)) for _, value in walk(story) if isinstance(value, str))
 
 
 def main() -> int:
@@ -50,18 +53,25 @@ def main() -> int:
     args = parser.parse_args()
 
     source = load_json(args.source)
+    arguments = command_arguments(source)
     translated = load_json(args.translated)
-    catalog = load_json(args.localization_dir / "catalog.json")
+    catalog = load_catalog(args.localization_dir, source)
     structural_errors = list(same_shape(source, translated))
     source_by_path = dict(walk(source))
     translated_by_path = dict(walk(translated))
 
     unchanged: list[dict[str, Any]] = []
     cyrillic_count = 0
+    renderer_command_errors = []
     for item in catalog:
         path = tuple(item["first_path"])
         before = source_by_path[path]
         after = translated_by_path[path]
+        command = re.match(r"\^?(?:HEADER|INFO|SMALL|MARGIN|INV|STYLE [A-Z]+):", before)
+        if command and not after.startswith(command[0]):
+            renderer_command_errors.append({"id": item["id"], "command": command[0]})
+        if before in arguments and before.count('"') != after.count('"'):
+            renderer_command_errors.append({"id": item["id"], "command": "quote delimiters"})
         if before == after:
             unchanged.append({"id": item["id"], "text": item["body"], "path": item["first_path"]})
         if re.search(r"[А-Яа-яЁё]", after):
@@ -92,10 +102,12 @@ def main() -> int:
         "protected_term_mismatches": protected_mismatches,
         "unresolved_placeholders": unresolved_placeholders[:200],
         "structural_errors": structural_errors[:200],
+        "renderer_command_errors": renderer_command_errors,
         "story_marker_present": marker_present,
         "passed": not structural_errors
         and not protected_mismatches
         and not unresolved_placeholders
+        and not renderer_command_errors
         and marker_present,
     }
     write_json(args.report, report)

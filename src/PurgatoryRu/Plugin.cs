@@ -7,6 +7,7 @@ using BepInEx.Logging;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.LowLevel;
 
 namespace PurgatoryRu;
 
@@ -15,13 +16,15 @@ public sealed class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "ru.hramgithub.purgatory.localization";
     public const string PluginName = "Purgatory Russian Localization";
-    public const string PluginVersion = "0.1.0";
+    public const string PluginVersion = "0.1.1";
 
     private const string StoryMarker = "\"^wod02Completed\"";
     private static string? replacementStory;
     private static ManualLogSource? log;
     private Harmony? harmony;
     private TMP_FontAsset? cyrillicFallback;
+    private static Font? fallbackSourceFont;
+    private static string? fallbackFontPath;
 
     private void Awake()
     {
@@ -43,21 +46,55 @@ public sealed class Plugin : BaseUnityPlugin
         replacementStory = candidate;
         harmony = new Harmony(PluginGuid);
         harmony.PatchAll(typeof(StoryConstructorPatch));
+        harmony.PatchAll(typeof(FallbackFontFacePatch));
         StartCoroutine(InstallCyrillicFallback());
         Logger.LogInfo($"Loaded Russian Ink story ({candidate.Length:N0} characters)." );
     }
 
     private IEnumerator InstallCyrillicFallback()
     {
-        for (int attempt = 0; attempt < 120; attempt++)
+        // Do not access TMP settings during BepInEx's pre-scene bootstrap.
+        yield return null;
+        for (int attempt = 0; attempt < 1800; attempt++)
         {
+            if (Resources.FindObjectsOfTypeAll<TMP_Text>().Length == 0)
+            {
+                yield return null;
+                continue;
+            }
             var fallbacks = TMP_Settings.fallbackFontAssets;
             if (fallbacks != null)
             {
-                Font osFont = Font.CreateDynamicFontFromOSFont(
-                    new[] { "Segoe UI", "Arial", "Tahoma" }, 32);
-                cyrillicFallback = TMP_FontAsset.CreateFontAsset(osFont);
+                string fonts = Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
+                foreach (string filename in new[] { "segoeui.ttf", "arial.ttf", "tahoma.ttf" })
+                {
+                    string path = Path.Combine(fonts, filename);
+                    if (File.Exists(path))
+                    {
+                        fallbackFontPath = path;
+                        break;
+                    }
+                }
+                if (fallbackFontPath == null)
+                {
+                    Logger.LogError("No supported system TrueType font was found.");
+                    yield break;
+                }
+                fallbackSourceFont = Font.CreateDynamicFontFromOSFont("Segoe UI", 32);
+                cyrillicFallback = TMP_FontAsset.CreateFontAsset(fallbackSourceFont);
+                if (cyrillicFallback == null)
+                {
+                    Logger.LogError("Could not create the Cyrillic TextMeshPro font asset.");
+                    yield break;
+                }
                 cyrillicFallback.name = "PurgatoryRu Cyrillic Fallback";
+                DontDestroyOnLoad(cyrillicFallback);
+                DontDestroyOnLoad(fallbackSourceFont);
+                if (!cyrillicFallback.TryAddCharacters("АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя«»—–…№"))
+                {
+                    Logger.LogError("The fallback font is missing required Russian characters.");
+                    yield break;
+                }
                 if (!fallbacks.Contains(cyrillicFallback))
                 {
                     fallbacks.Add(cyrillicFallback);
@@ -68,6 +105,23 @@ public sealed class Plugin : BaseUnityPlugin
             yield return null;
         }
         Logger.LogWarning("TextMeshPro settings did not become available; Cyrillic fallback was not installed.");
+    }
+
+    // Unity OS fonts do not expose embedded font bytes to TextCore in a player.
+    // Redirect only our dedicated source font to its installed TrueType file.
+    [HarmonyPatch(typeof(FontEngine), nameof(FontEngine.LoadFontFace),
+        new[] { typeof(Font), typeof(int) })]
+    private static class FallbackFontFacePatch
+    {
+        private static bool Prefix(Font font, int pointSize, ref FontEngineError __result)
+        {
+            if (fallbackSourceFont == null || font != fallbackSourceFont || fallbackFontPath == null)
+            {
+                return true;
+            }
+            __result = FontEngine.LoadFontFace(fallbackFontPath, pointSize);
+            return false;
+        }
     }
 
     private void OnDestroy()

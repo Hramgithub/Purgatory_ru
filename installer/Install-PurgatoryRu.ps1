@@ -84,7 +84,7 @@ Get-ChildItem -LiteralPath $PayloadRoot -Recurse -File | ForEach-Object {
 }
 
 $state = [ordered]@{
-    packageVersion = '0.1.0'
+    packageVersion = (Get-Content -Raw -LiteralPath (Join-Path $PackageRoot 'manifest.json') | ConvertFrom-Json).version
     installedAt = (Get-Date).ToString('o')
     gamePath = $Target
     backupRoot = if ($backedUp.Count) { $backupRoot } else { $null }

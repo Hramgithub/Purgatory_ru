@@ -45,6 +45,9 @@ Rules:
   profanity, fragments, punctuation intent, and first-person feminine grammar for Samira.
 - Never alter, translate, remove, duplicate, or reorder placeholders like ⟦T000⟧.
 - Preserve the exact count and positions of | separators and newlines.
+- Keep renderer prefixes HEADER:, INFO:, STYLE TUTORIAL:, STYLE TUTORIALHEADER:,
+  SMALL:, MARGIN: and INV: exactly as written; translate only their content.
+- Preserve ASCII double-quote delimiters in command arguments; never convert them to guillemets.
 - Personal, pack, spirit, and company names stay exactly as written in Latin/Polish.
 - Render geographical names in their conventional Russian forms: Poland=Польша,
   Warsaw=Варшава, Białowieża Forest=Беловежская пуща, Białystok=Белосток,

@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$Version = '0.1.1'
+    [string]$Version = '0.1.2'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -8,13 +8,19 @@ $Root = Split-Path -Parent $PSScriptRoot
 $SourceZip = Join-Path $Root 'third_party\downloads\BepInEx_win_x64_5.4.23.5.zip'
 $PluginDll = Join-Path $Root 'src\PurgatoryRu\bin\Release\netstandard2.1\PurgatoryRu.dll'
 $Story = Join-Path $Root 'dist\content\wod02.json'
+$UiReport = Join-Path $Root 'dist\ui-command-report.json'
 $OutRoot = Join-Path $Root 'dist'
 $Stage = Join-Path $OutRoot "Purgatory-RU-$Version"
 $Payload = Join-Path $Stage 'payload'
 $Archive = Join-Path $OutRoot "Purgatory-RU-$Version.zip"
 
-foreach ($required in @($SourceZip, $PluginDll, $Story)) {
+foreach ($required in @($SourceZip, $PluginDll, $Story, $UiReport)) {
     if (!(Test-Path -LiteralPath $required)) { throw "Required file missing: $required" }
+}
+$uiQa = Get-Content -Raw -LiteralPath $UiReport | ConvertFrom-Json
+if (!$uiQa.passed -or $uiQa.command_count -ne 8 -or
+    $uiQa.storySha256 -ne (Get-FileHash -LiteralPath $Story -Algorithm SHA256).Hash) {
+    throw 'Run Test-InkUiCommands.ps1 against the current story before packaging.'
 }
 if (Test-Path -LiteralPath $Stage) { Remove-Item -LiteralPath $Stage -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $Payload | Out-Null
@@ -28,6 +34,7 @@ Copy-Item -Path (Join-Path $Root 'installer\*') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'COMPATIBILITY.md') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'GLOSSARY.md') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'QA_REPORT.md') -Destination $Stage -Force
+Copy-Item -LiteralPath $UiReport -Destination (Join-Path $Stage 'UI-COMMAND-QA.json') -Force
 
 # Windows PowerShell 5.1 (used by install.bat) requires a BOM for Cyrillic.
 Get-ChildItem -LiteralPath $Stage -Filter '*.ps1' -File | ForEach-Object {

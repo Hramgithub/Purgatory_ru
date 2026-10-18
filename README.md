@@ -10,7 +10,7 @@ Ink-сценарий `wod02`. Файлы игры не патчатся и не 
 
 ## Установка
 
-Актуальная beta-версия: [v0.1.1](https://github.com/Hramgithub/Purgatory_ru/releases/tag/v0.1.1).
+Актуальная beta-версия: [v0.1.2](https://github.com/Hramgithub/Purgatory_ru/releases/tag/v0.1.2).
 
 1. Скачайте архив релиза `Purgatory-RU-<версия>.zip`.
 2. Полностью распакуйте его.
@@ -41,8 +41,14 @@ Edition*: Гару, Гайя, Вирм, Вайлд, Ткач, Умбра, Бэй
 
 ```powershell
 dotnet build .\src\PurgatoryRu\PurgatoryRu.csproj -c Release
+python .\scripts\renderer_commands.py <original-wod02.json> work/ui-command-locations.json
+.\scripts\Test-InkUiCommands.ps1 -SourcePath <original-wod02.json> -StoryPath dist/content/wod02.json -LocationsPath work/ui-command-locations.json -ReportPath dist/ui-command-report.json
 .\scripts\build_package.ps1
 ```
+
+Перед упаковкой проверяются все восемь окон создания персонажа через настоящий
+Ink runtime: семь полей команды, количество вариантов и внутренние идентификаторы.
+Сборка пакета отклоняет отсутствующий отчёт либо отчёт от другого сценария.
 
 Для сборки DLL нужны установленные файлы игры и reference assemblies BepInEx.
 Официальный BepInEx 5.4.23.5 x64 загружается отдельно и не берётся из чужих

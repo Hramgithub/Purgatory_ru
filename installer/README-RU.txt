@@ -15,7 +15,9 @@ Purgatory — русская локализация
 - BepInEx 5.4.23.5 x64;
 - PurgatoryRu.dll;
 - переведённый основной Ink-сценарий wod02.json;
-- динамический кириллический fallback-шрифт из системных Segoe UI/Arial/Tahoma.
+- загрузка полного семейства Segoe UI или Arial из установленной Windows:
+  обычное, курсивное, жирное и жирное курсивное начертания.
+  Сами файлы шрифтов Windows в архив не входят.
 
 Локализация переводит сюжет, диалоги, описания и связанные интерфейсные тексты.
 Личные имена, названия навыков и Даров сохранены на языке оригинала.
@@ -28,7 +30,7 @@ BepInEx\plugins\PurgatoryRu. Сам BepInEx остаётся, чтобы не с
 После запуска игры откройте BepInEx\LogOutput.log и найдите строки:
   Loaded Russian Ink story
   Replaced the main Purgatory Ink story
-  Installed dynamic Cyrillic TextMeshPro fallback font
+  Installed coherent Cyrillic font family
 
 Совместимость
 Проверенная версия игры и контрольные суммы приведены в COMPATIBILITY.md.

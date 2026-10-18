@@ -5,13 +5,18 @@ from __future__ import annotations
 
 import argparse
 import json
+import hashlib
 import re
 from pathlib import Path
 from typing import Any, Iterable
 
 from translate_ink_gpt import KNOWN_CHARACTER_NAMES, SKILLS_AND_GIFTS, load_json, walk
-from renderer_commands import command_arguments
+from renderer_commands import command_arguments, contract_errors, technical_literal_paths
 from translation_catalog import load_catalog
+from render_overrides import load_overrides, apply_override, approved_name_audit
+from render_overrides import load_corrections_audit
+from translate_ink_gpt import TAG_RE
+from collections import Counter
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -56,13 +61,34 @@ def main() -> int:
     arguments = command_arguments(source)
     translated = load_json(args.translated)
     catalog = load_catalog(args.localization_dir, source)
+    overrides = load_overrides(args.localization_dir)
     structural_errors = list(same_shape(source, translated))
     source_by_path = dict(walk(source))
     translated_by_path = dict(walk(translated))
 
     unchanged: list[dict[str, Any]] = []
     cyrillic_count = 0
-    renderer_command_errors = []
+    renderer_command_errors = contract_errors(source, translated)
+    markup_errors = []
+    markup_checked = 0
+    by_source = {item['source']: item for item in catalog}
+    for path, before in source_by_path.items():
+        if not isinstance(before, str) or before not in by_source:
+            continue
+        item = by_source[before]
+        after = translated_by_path.get(path)
+        if not isinstance(after, str):
+            continue
+        # RU may reorder protected tags to fit syntax, but may not invent or
+        # remove markup. Reviewed exceptional changes are applied to EN only
+        # for calculating the expected tag multiset, never to the game source.
+        try:
+            expected = apply_override(item, item['body'], overrides)
+            if Counter(TAG_RE.findall(after)) != Counter(TAG_RE.findall(expected)):
+                raise ValueError('markup differs from source plus approved repair')
+        except ValueError as exc:
+            markup_errors.append({'id': item['id'], 'path': list(path), 'error': str(exc)})
+        markup_checked += 1
     for item in catalog:
         path = tuple(item["first_path"])
         before = source_by_path[path]
@@ -78,12 +104,16 @@ def main() -> int:
             cyrillic_count += 1
 
     protected_mismatches: list[dict[str, Any]] = []
+    name_deltas, name_correction_audit = approved_name_audit(source, catalog, overrides,
+                                                          load_corrections_audit(args.localization_dir))
     for term in SKILLS_AND_GIFTS + KNOWN_CHARACTER_NAMES:
         before_count = count_occurrences(source, term)
         after_count = count_occurrences(translated, term)
-        if before_count != after_count:
+        expected_count = before_count + name_deltas.get(term, 0)
+        if expected_count != after_count:
             protected_mismatches.append(
-                {"term": term, "source_count": before_count, "translated_count": after_count}
+                {"term": term, "source_count": before_count, "expected_count": expected_count,
+                 "translated_count": after_count}
             )
 
     unresolved_placeholders = [
@@ -95,6 +125,8 @@ def main() -> int:
         value == "^wod02Completed" for _, value in walk(translated) if isinstance(value, str)
     )
     report = {
+        "sourceSha256": hashlib.sha256(args.source.read_bytes()).hexdigest(),
+        "storySha256": hashlib.sha256(args.translated.read_bytes()).hexdigest(),
         "catalog_items": len(catalog),
         "catalog_items_with_cyrillic": cyrillic_count,
         "unchanged_catalog_items": len(unchanged),
@@ -103,11 +135,19 @@ def main() -> int:
         "unresolved_placeholders": unresolved_placeholders[:200],
         "structural_errors": structural_errors[:200],
         "renderer_command_errors": renderer_command_errors,
+        "technical_literal_checks": dict(Counter(r['usage'] for r in technical_literal_paths(source))),
+        "markup_checked_occurrences": markup_checked,
+        "markup_errors": markup_errors,
+        "render_override_ids": sorted(overrides),
+        "approved_name_corrections": name_correction_audit,
+        "approved_name_count_deltas": name_deltas,
+        "source_corrections_audit": load_corrections_audit(args.localization_dir),
         "story_marker_present": marker_present,
         "passed": not structural_errors
         and not protected_mismatches
         and not unresolved_placeholders
         and not renderer_command_errors
+        and not markup_errors
         and marker_present,
     }
     write_json(args.report, report)

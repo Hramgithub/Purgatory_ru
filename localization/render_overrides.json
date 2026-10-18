@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "path_restorations": [
+    {
+      "id": 263,
+      "path": ["root", 2, "maxRenown", 1, 3],
+      "source_sha256": "c0df266921309c8bfdce59cb806816d9b78baa175422ad6fb911efff024ccf05",
+      "expected": "^balanced",
+      "reason": "This occurrence is a comparison literal, not the visible Rage/Harano label sharing the same source string."
+    }
+  ],
+  "source_corrections_audit": [
+    {"id": 1865, "kind": "tooltip-target", "before": "wyrm", "after": "weaver", "reason": "Author duplicated one power while contrasting two; second tooltip restored."},
+    {"id": 3077, "kind": "protected-name", "before": "Andrzej", "after": "Aleksander", "reason": "User-approved author typo; cafe conversation speaker continuity."},
+    {"id": 11229, "kind": "protected-name", "before": "Andrzej", "after": "Olga", "reason": "User-approved author typo; surrounding conversation and female pronouns."},
+    {"id": 7626, "source_sha256": "e74abda84c195d502e5edd7e4faa9a98a3eec07d2f191a2d4d8ac56144e9717e", "kind": "plaintext-name", "before": "Krzystztof", "after": "Krzysztof", "reason": "User-approved spelling typo; same train-scene character."},
+    {"id": 7637, "source_sha256": "29e8a2b14735e64d91c160f5322669b8ee88f9c670ec12b0f36c4aae821a6cbe", "kind": "plaintext-name", "before": "Krzsyzstof", "after": "Krzysztof", "reason": "User-approved spelling typo; same train-scene character."},
+    {"id": 11897, "source_sha256": "a98785874d897e68be0d6dd161b39f0684f812e7240950c2f7e3e9b784fd8e36", "kind": "plaintext-name", "before": "Andrez", "after": "Andrzej", "reason": "User-approved author typo; same battle opponent."},
+    {"id": 12624, "kind": "protected-item", "before": "Living Ward", "after": "амулет", "reason": "User-approved copy-paste defect: Amulet Protection branch, not the Living Ward Gift branch."},
+    {"id": 12557, "kind": "literal-helper", "reason": "Unexecuted author helper expression replaced by its static glory margin label; no gameplay or bytecode change."}
+  ],
+  "items": [
+    {
+      "id": 12624,
+      "source_sha256": "a4ef1cc5887d82ff38061466bee8becfa3fcc83a18be4a8b84c0076a2cefff1e",
+      "before_tags": [],
+      "after_tags": [],
+      "operations": [{"kind": "proper_name", "token": "⟦T001⟧", "before": "Living Ward", "after": "амулет"}],
+      "reason": "User-approved source copy-paste correction: this is the Amulet Protection branch; neighboring activation and continuations refer to the amulet, not the Living Ward Gift."
+    },
+    {
+      "id": 12557,
+      "source_sha256": "3e6743d6a8296d6a9c68b104da7273925ee8741ede97a671422c076674d410fd",
+      "before_tags": [],
+      "after_tags": [],
+      "operations": [{"kind": "replace_literal", "before": "^”renownMargin(\"glory\")” ", "after": "^\"Слава\" "}],
+      "reason": "User-approved minimal UI repair of an unexecuted author helper literal: the static glory label in an ASCII margin wrapper is equivalent to the intended helper output; branch logic and Ink bytecode remain unchanged."
+    },
+    {
+      "id": 3077,
+      "source_sha256": "78ea37a2ad7e6ebaba640d0a3c46279849200dd83472ad22ff020f820fe2cdff",
+      "before_tags": ["<link=sept>", "</link>", "<b>", "</b>"],
+      "after_tags": ["<link=sept>", "</link>", "<b>", "</b>"],
+      "operations": [{"kind": "proper_name", "token": "⟦T000⟧", "before": "Andrzej", "after": "Aleksander"}],
+      "reason": "User approved correction of the original author's mistaken speaker name in the cafe conversation with Aleksander."
+    },
+    {
+      "id": 11229,
+      "source_sha256": "24095d9acff8bb3f014ce1bf1b189978fb62b89216ff45f5e63cfcef2878ed50",
+      "before_tags": ["<b>", "</b>", "<link=hauglosk>", "</link>"],
+      "after_tags": ["<b>", "</b>", "<link=hauglosk>", "</link>"],
+      "operations": [{"kind": "proper_name", "token": "⟦T002⟧", "before": "Andrzej", "after": "Olga"}],
+      "reason": "User approved correction of the original author's name typo: the surrounding conversation and female pronouns refer to Olga."
+    },
+    {
+      "id": 1865,
+      "source_sha256": "6f65dd148edcbe8bc8f9dc3c62ae1ea5279c5e02ea6a51be9e0dff63c3fcb291",
+      "before_tags": ["<link=wyrm>", "</link>", "<link=wyrm>", "</link>"],
+      "after_tags": ["<link=wyrm>", "</link>", "<link=weaver>", "</link>"],
+      "operations": [{"kind": "replace_tag", "index": 2, "before": "<link=wyrm>", "after": "<link=weaver>"}],
+      "reason": "Correct the second tooltip target: the surrounding exchange contrasts two different cosmic powers. Original author duplicated the first link."
+    },
+    {
+      "id": 3561,
+      "source_sha256": "178eab5906ce013a41e5e4d69f8250766c58720304567802ab75ae93e48cb335",
+      "before_tags": ["<b>", "<link=scavengerpack>", "</b>", "</link>", "<b>"],
+      "after_tags": ["<b>", "<link=scavengerpack>", "</b>", "</link>", "<b>", "</b>"],
+      "operations": [{"kind": "repair_malformed_b", "before": "</b", "after": "</b>"}],
+      "reason": "Repair the malformed bold closer within a complete paragraph; following paragraph does not close it."
+    },
+    {
+      "id": 11005,
+      "source_sha256": "6246f64b951cb61cdeeffb0ac616c2acbd98456742a63513d8e705155184fecc",
+      "before_tags": ["<i>", "</i>", "<b>", "<b>", "</b>"],
+      "after_tags": ["<i>", "</i>", "<b>", "<b>", "</b>", "</b>"],
+      "operations": [{"kind": "append_closer", "tag": "</b>"}],
+      "reason": "Close remaining nested bold at paragraph boundary before the separate choice container."
+    },
+    {
+      "id": 5708,
+      "source_sha256": "7b320a6d95a4bacdae6a4190eaab5b1b1c615255582e48b39b5e4a6bb89df868",
+      "before_tags": ["<link=moot>"],
+      "after_tags": ["<link=moot>", "</link>"],
+      "operations": [{"kind": "append_closer", "tag": "</link>"}],
+      "reason": "Close tooltip link at complete paragraph boundary; next paragraph is a separate speaker."
+    },
+    {
+      "id": 3198,
+      "source_sha256": "dc5320d02d7936f593fffcb780734beba0a635bffb2439ca6004a579c27887a4",
+      "before_tags": ["<b>"],
+      "after_tags": ["<b>", "</b>"],
+      "operations": [{"kind": "append_closer", "tag": "</b>"}],
+      "reason": "Close bold in a complete reply before the next compiled evaluation block."
+    },
+    {
+      "id": 3444,
+      "source_sha256": "46c5d14908a05c517e0df6666660c2994378a22dff73abc5ad88d76e8d2aef7f",
+      "before_tags": ["<b>"],
+      "after_tags": ["<b>", "</b>"],
+      "operations": [{"kind": "append_closer", "tag": "</b>"}],
+      "reason": "Close bold at paragraph boundary; following independent reply has no closer."
+    },
+    {
+      "id": 11158,
+      "source_sha256": "f6d6272894a81fe72def1632d1e47f869964c5f2f708a0f3f902a4e8fa32c254",
+      "before_tags": ["<b>", "</b>", "<b>", "</b>", "<link=puszczabialowieska>", "</link>", "<b>", "<link=narew>", "</link>"],
+      "after_tags": ["<b>", "</b>", "<b>", "</b>", "<link=puszczabialowieska>", "</link>", "<b>", "<link=narew>", "</link>", "</b>"],
+      "operations": [{"kind": "append_closer", "tag": "</b>"}],
+      "reason": "Close final bold before the paragraph diverts to the next gather."
+    },
+    {
+      "id": 1634,
+      "source_sha256": "0f986f6ecea37c11057542611926040fd3fc4411db01388296c1cda40ad6e838",
+      "before_tags": ["<b>"],
+      "after_tags": ["<b>", "</b>"],
+      "operations": [{"kind": "append_closer", "tag": "</b>"}],
+      "reason": "Close bold before the standalone paragraph exits to another named scene."
+    },
+    {
+      "id": 1636,
+      "source_sha256": "a0a8766f9561bb5cfbe136f5be4081b572fcbfed6f48b6e07ffce7c75b6ac210",
+      "before_tags": ["<b>"],
+      "after_tags": ["<b>", "</b>"],
+      "operations": [{"kind": "append_closer", "tag": "</b>"}],
+      "reason": "Close bold at complete paragraph boundary before a function call and named-scene divert."
+    }
+  ]
+}

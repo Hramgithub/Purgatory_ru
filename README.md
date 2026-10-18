@@ -10,7 +10,7 @@ Ink-сценарий `wod02`. Файлы игры не патчатся и не 
 
 ## Установка
 
-Актуальная beta-версия: [v0.1.3](https://github.com/Hramgithub/Purgatory_ru/releases/tag/v0.1.3).
+Актуальная beta-версия: [v0.1.4](https://github.com/Hramgithub/Purgatory_ru/releases/tag/v0.1.4).
 
 1. Скачайте архив релиза `Purgatory-RU-<версия>.zip`.
 2. Полностью распакуйте его.
@@ -42,6 +42,14 @@ Edition*: Гару, Гайя, Вирм, Вайлд, Ткач, Умбра, Бэй
 самим `Ink.Runtime.Story`. Ollama и локальные модели для итогового перевода не
 использовались.
 
+В v0.1.4 выполнен отдельный контекстный проход GPT-редакторов по всему сценарию:
+14 067 уникальных строк и 23 146 их вхождений, включая варианты выбора,
+продолжения и альтернативные ветки. Изменена 1 651 строка. Повествование Samira
+согласовано в женском роде и прошедшем времени; прямая речь, мысли и описания
+сохраняют время по смыслу. Исправлены подтверждённые контекстом ошибки имён
+в оригинале. Аудит покрытия — [localization/editorial-review.json](localization/editorial-review.json).
+Это вычитка сценария, а не полное игровое прохождение всех веток.
+
 ## Сборка
 
 ```powershell
@@ -68,6 +76,28 @@ python .\scripts\assemble_codex_translation.py <original-wod02.json> localizatio
 
 `localization/index.json` содержит адреса строк, хеши и плейсхолдеры, поэтому
 исходный английский сценарий не требуется публиковать в репозитории.
+
+Дополнительные проверки для разработчика выполняются в **PowerShell 7 (`pwsh`)**;
+установщику игрока по-прежнему достаточно Windows PowerShell 5.1.
+
+```powershell
+python .\scripts\renderer_commands.py <original-wod02.json> work/summary-locations.json --command ui-social-choices
+pwsh -NoProfile -File .\scripts\Test-InkChapterSummaries.ps1 -SourcePath <original-wod02.json> -StoryPath dist/content/wod02.json -LocationsPath work/summary-locations.json -ReportPath dist/chapter-summary-report.json
+pwsh -NoProfile -File .\scripts\Test-InkRenown.ps1 -SourcePath <original-wod02.json> -StoryPath dist/content/wod02.json -ReportPath dist/renown-report.json
+python .\scripts\qa_translation.py <original-wod02.json> dist/content/wod02.json localization --report dist/qa-report.json
+python -m unittest discover -s scripts -p "test_*.py"
+```
+
+Проверка сводок вызывает все шесть команд через игровой Ink runtime и сверяет
+число строк, ключи и количества вариантов вне переводимых полей. Это проверка
+формата при начальном состоянии переменных, а не полное прохождение веток.
+Статический QA дополнительно проверяет каждое вхождение служебных кавычек
+margin, метаданных и неизменяемых команд Ink. Допустимые исправления авторских
+тегов перечислены в `localization/render_overrides.json`: они привязаны к хешам
+исходных строк, применяются только при сборке и не меняют исходник игры.
+Проверка `maxRenown` отдельно воспроизводит равенство всех трёх значений и
+попарные ничьи: внутренний литерал `balanced` сохраняется только в сравнении,
+а одноимённые видимые подписи локализуются.
 
 Визуально проверено начало игры; полное прохождение всех веток пока не выполнено.
 Главное меню, заставки глав и статические элементы HUD остаются на английском.

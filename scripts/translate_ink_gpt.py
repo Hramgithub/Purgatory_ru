@@ -41,6 +41,8 @@ SKILLS_AND_GIFTS = [
     "Geas",
     "Living Ward",
     "Silver Compact",
+    "Closing the Gap",
+    "Silver Claws",
 ]
 
 KNOWN_CHARACTER_NAMES = [

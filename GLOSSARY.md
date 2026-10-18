@@ -24,6 +24,9 @@
 | Gift | Дар |
 | Rite | Обряд |
 | Veil | Завеса |
+| Luna | Луна |
+| First Change | Первое Превращение |
+| Cult of Fenris | Культ Фенриса |
 | Homid / Glabro / Crinos / Hispo / Lupus | Хомид / Глабро / Кринос / Хиспо / Люпус |
 | Ragabash / Theurge / Philodox / Galliard / Ahroun | Рагабаш / Теург / Филодокс / Галлиард / Ахрун |
 | Black Furies | Чёрные Фурии |

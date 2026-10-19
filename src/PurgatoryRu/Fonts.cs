@@ -173,7 +173,7 @@ public sealed partial class Plugin
                 }
             }
             Logger.LogInfo("Font family QA OK: both reported Russian samples rendered with one face and uniform letter scale in all four styles (8 cases).");
-            return true;
+            return ValidateFormFontMaterial();
         }
         catch (Exception exception)
         {
@@ -186,6 +186,7 @@ public sealed partial class Plugin
     private static void ApplyConsistentFont(TMP_Text text)
     {
         if (!fontsReady || russianRegular == null || text == null || text.font == null) return;
+        LocalizeFormLabel(text);
         if (ContainsCyrillic(text.text))
         {
             FontBinding binding = FontBindings.GetValue(text, value => new FontBinding(value));
@@ -203,8 +204,16 @@ public sealed partial class Plugin
             if (text.font != russianRegular)
             {
                 text.font = russianRegular;
+            }
+            // A pooled UI view or the game's FontReplacer may reassign a
+            // material independently of font. Glyph UVs belong to the font's
+            // atlas: equal font does NOT imply a compatible material.
+            // Keep valid stencil/masking instances instead of overwriting them.
+            if (!MaterialMatchesFont(text.fontSharedMaterial, russianRegular))
+            {
                 text.fontSharedMaterial = russianRegular.material;
             }
+            RepairFormSubMeshes(text);
         }
         else if (FontBindings.TryGetValue(text, out FontBinding binding) && IsRussianFont(text.font))
         {
@@ -218,6 +227,7 @@ public sealed partial class Plugin
     {
         if (!fontsReady || info.textComponent == null) return;
         if (info.textComponent.gameObject.name == "PurgatoryRu Font QA") return;
+        AuditFormFontRun(info);
         string text = info.textComponent.text;
         string? sample = text.Contains("Ты должна бежать.") ? "Ты должна бежать." :
             text.Contains("Скорее.") ? "Скорее." : null;

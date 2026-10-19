@@ -1,0 +1,614 @@
+{
+  "format": 1,
+  "version": "0.1.5",
+  "date": "2026-10-20",
+  "complete": true,
+  "baseline_story_sha256": "2c7afd169a941ddd43bfb661c3b211b12e53066d5a2e7b60f1a0dd8041a1f46b",
+  "source_sha256": "91b8666e021b977f1371f713bea804e823b0fd7eaf2c5e5baf95b5c267006265",
+  "story_sha256": "d9a82ee78f2db6bf87a850a248776f129ca47a0795c6f85d40422b4476799798",
+  "reviewed_count": 4106,
+  "reviewed_slots": 5259,
+  "name_fragment_paths": 38,
+  "method": "GPT editors read each original and translated context; reviewed slots merged by identity/order; extra aliases reviewed separately; nominated-case heuristic followed by contextual recheck. Frozen counts precede explicit retained-term exclusions.",
+  "full_editorial_baseline": "editorial-review.json remains the immutable v0.1.4 full-script receipt; this audit covers the reviewed v0.1.5 delta, not another all-branches gameplay run.",
+  "frozen_reviews": [
+    {
+      "group": "early",
+      "reviewed_ids": 1112,
+      "reviewed_slots": 1362,
+      "input_sha256": "81ff50bdc742f00ce1688071e8b482540fd20651438189968cc5dc91bf220045",
+      "review_sha256": "396680a6491e63c335950b9462acf631007cf8449858290a9f0507c373577797"
+    },
+    {
+      "group": "middle",
+      "reviewed_ids": 1353,
+      "reviewed_slots": 1649,
+      "input_sha256": "e0cc93140cba896b1ac94a011c0d49ec0591b02eabe2f0df718cbda72fdd7cf6",
+      "review_sha256": "9abce68126d284fd6adbd1211def1a8495a4dadbfc241ef8f0001f69be9fbe4b"
+    },
+    {
+      "group": "late",
+      "reviewed_ids": 1349,
+      "reviewed_slots": 1829,
+      "input_sha256": "75805a47c2ae03b5e7990f1ab7e0942f9eda22e908b9dc5d049397a0f2469d73",
+      "review_sha256": "420a81cb77db41cca4cfd2ed3d43b133cbce91c4af45420cfa8f6e7edb501ad8"
+    },
+    {
+      "group": "extras",
+      "reviewed_ids": 336,
+      "reviewed_slots": 370,
+      "input_sha256": "c40b92aa487413a90340de1f7bbca191a7a47b441766b74090ddb4beb5a1c75a",
+      "review_sha256": "ea9efdc9e0eaff493f5e9a36b788898ebd7e12817a127ab598290a7b15a14486"
+    }
+  ],
+  "additional_review_sha256": "4f7defe107ca398b213af11144ac61ab28d4e1ec13e0ca9ecbe6db7a36b14e37",
+  "additional_review_slots": 78,
+  "final_grammar_review_sha256": "80ff880adc20ec91aeb3ea17807042b783d8fc5f4bcaff3b27ec47b6520f6492",
+  "root_form_adjustments": [
+    {
+      "id": 7518,
+      "english": "Wolfmother",
+      "form": "Стая «Волчица-Мать»",
+      "reason": "Заглавная буква в начале прямой речи."
+    },
+    {
+      "id": 151,
+      "english": "Winter Weasel",
+      "form": "Дух по имени «Зимняя ласка»",
+      "reason": "Заглавная буква в начале описания задания."
+    },
+    {
+      "id": 164,
+      "english": "Winter Weasel",
+      "form": "Дух по имени «Зимняя ласка»",
+      "reason": "Заглавная буква в начале описания задания."
+    },
+    {
+      "id": 10046,
+      "english": "Andrzej",
+      "form": "Анджея",
+      "reason": "Найти кого: винительный падеж одушевлённого имени."
+    }
+  ],
+  "artifacts": {
+    "localization/name-localization.json": "75f1b6deb14fef2a9d13817e52bfb1b390384f696715d0d180802503c5ff3146",
+    "localization/name-forms.json": "128dfadf0e77a45e354f962c0ada7238dd38fcfece19c8cec9716d4260aedd1d",
+    "localization/name-fragments.json": "510df0990d3d0d31134db4a24082f761a7db5fbb8b8b1c9b5e0d47161dd9fbd1",
+    "localization/retained-terms.json": "3d4fcd32c36c0f9686f552fb463331b2535f63c1f35e29ddcc7f678f01fd02a6"
+  },
+  "prose_changes": [
+    {
+      "id": 423,
+      "before_sha256": "b029e6d241fb434abd582cdc5a87a334c4033991a0a45cad01388d4bd7ffef77",
+      "after_sha256": "b70279989e7975a878c98011a06e5c1b07a80e04f6f056036b4cfc841ad20b46",
+      "reasons": [
+        "Русское соответствие после исходного заголовка; авторская фонетика, теги и прочее описание сохраняются без сюжетных дополнений."
+      ]
+    },
+    {
+      "id": 466,
+      "before_sha256": "41377fcd654988d6adcd2582e292ae6c53373e7f54d68141e860682ae29fa61c",
+      "after_sha256": "7e9d6c3316510c5b2e0b5536537445c3282418f134399c387021fab911f4813e",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 473,
+      "before_sha256": "9824b3c21262555edf2ec9de4078bfea3a31f763fababfcabe636a662924c2c1",
+      "after_sha256": "5a31731c61259fa518d835ecd59dc5de5ab398ed5092e736341517f3d829673a",
+      "reasons": [
+        "Сохранить понятный русский термин в прозе, дать исходное написание в существующей подсказке."
+      ]
+    },
+    {
+      "id": 479,
+      "before_sha256": "c6f74d167a1ecb7a41be544e53f5c3ceb11903943761fe3834b589aab20123b7",
+      "after_sha256": "bd70eb936395a5ade5d4cd5a6186956d67039c8f2423344cbda380412263ef8f",
+      "reasons": [
+        "Сохранить русское склонение в прозе, дать исходное написание в существующей подсказке."
+      ]
+    },
+    {
+      "id": 491,
+      "before_sha256": "4b40adf0a5d326d8beea37f85ed8c37f47b7d751b4de6035c3c2ed5d6c1fbd14",
+      "after_sha256": "3c7ef3331a4364dcbb7d988c81b9c40d03d940ae4a1d1be8075d582f558dfd84",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 497,
+      "before_sha256": "2a7176611acf27d71aa129c0c2ad3e21849b699aaeae0c73f5cf61c77df2645c",
+      "after_sha256": "13eef390641e48494a070fc23dbbb3248370de77c68a1650b6c8643d8afde86b",
+      "reasons": [
+        "Добавляем чтение к авторскому слову, не заменяя его личным именем или уменьшительным «рыбка»."
+      ]
+    },
+    {
+      "id": 502,
+      "before_sha256": "21b3ebf7f060484fbd41fe05e2d676cd3a05951e4e67f41278ce144cfba4f0ec",
+      "after_sha256": "042637f115a96013910c7134eb1c391a28fdfcb294b8c5cd47c18491724ea7f8",
+      "reasons": [
+        "Сохраняем различие авторских gale (Wichura) и storm (Burza)."
+      ]
+    },
+    {
+      "id": 2871,
+      "before_sha256": "078df70eb8f6b5b37488f8675645cf23a9f9055443722f759010523d7155adbf",
+      "after_sha256": "11ab24a239357c8dbe18529bb296e42c7d0208815145467cdda3a7dc2af7f5e1",
+      "reasons": [
+        "После локализации Plac Zamkowy иначе получится двукратное «Замковая площадь»."
+      ]
+    },
+    {
+      "id": 3528,
+      "before_sha256": "215e95adec5ba03fa1c7166a459a8035ca5835520decc0f74ac4b39f817fcd8f",
+      "after_sha256": "b1a8e5e97ac8ff7e5ec5a17e2bf0b0cb0063e2e8388f996cd024a36ed9666293",
+      "reasons": [
+        "Дефис перед приложением-названием типа существа."
+      ]
+    },
+    {
+      "id": 3567,
+      "before_sha256": "40e85fd5cec9196e0791ea110c13f8c508579e9b03aec1c9a3f46ced6a01be9a",
+      "after_sha256": "dd6d83b713a1a00290155d6ad4b78b48fdde05c8e65992b1d5e48cf54eb171ac",
+      "reasons": [
+        "Дефис перед приложением-названием типа существ."
+      ]
+    },
+    {
+      "id": 3631,
+      "before_sha256": "0ef8942449ea81e237b792a73e7d28ab122e5302872b663f66fa80ec46c96367",
+      "after_sha256": "5201ab5b194a4522ad027e6392ecf88c3c8df47820b7eedfe796295a1d55a619",
+      "reasons": [
+        "В имени предусмотрены только кавычки и название: переводим внешний Pack словом «стая»."
+      ]
+    },
+    {
+      "id": 4256,
+      "before_sha256": "6f296be4b626ecab205acee2be1058d8de4b2a5c504bf4685ef6f88e4583b6e2",
+      "after_sha256": "07db0d4b379f9d88c91e5641e01372ed0e0e722b6d0d62fd3a58bf21067ab0c4",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction.",
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 4981,
+      "before_sha256": "2245e48062403220e89e95727a977ff1db109d31c343252224bd9f9a5d45cb89",
+      "after_sha256": "0f3a5b6f042589da40675ae7254b69ea46895993632f293cf80896f6fac615c6",
+      "reasons": [
+        "Запятая после обращения Самира; далее продолжение того же предложения."
+      ]
+    },
+    {
+      "id": 5414,
+      "before_sha256": "44e5f0379c4281bd43c1f968a0ac2d9b2603bb62cc705407ffa51eb3d55d9980",
+      "after_sha256": "e4ef4f08cb93f0888576577103c6be46bbcd782b481f0ba1f63f8ce3e3f1b023",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 5433,
+      "before_sha256": "89223854e102b78dcd120d780e557ba3aa94b58e011fab6ddc2e290d26264f16",
+      "after_sha256": "efecfbeae38d77a51e916769451d1a36376a3b9e0d92c9a200ad3adf1d181805",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 5442,
+      "before_sha256": "b9894e3b048c7e57884a34488537a50668a0bfca83c202236ca9fe40ed468ff3",
+      "after_sha256": "6d48ee27b1532e69680d8f6932206f1af3255a990fb6cf96176f5907e184e3ec",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 5446,
+      "before_sha256": "935af1389d1a02644ee58eb9d960dd9b6d049a6f32e69e287c845cc6aa211675",
+      "after_sha256": "1876fac55ea29c9be1851b3311f33751d2c89c8ec1d34154858f1101f359c28d",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 5492,
+      "before_sha256": "96227e9e01a0170e5cf1a2c24cdfd986853b21166e4ee9edd22579604937c50e",
+      "after_sha256": "ae23ac77b58007ce477e6078e75bd8d0f076ab4ecf5c89aba5e3dc7708e6a1ce",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 5502,
+      "before_sha256": "e030911d7f0f2952872b473a917d0602cb1c3e522d14cb731de7b0ff90d41cab",
+      "after_sha256": "b193245ae932645cb18ef2cc12c98dee0809ce5af5c7b50943fce03ad0e12b45",
+      "reasons": [
+        "Переводим внешнюю часть названия стаи; слот Five Wolves уже содержит форму «Пяти волков»."
+      ]
+    },
+    {
+      "id": 5506,
+      "before_sha256": "8beebe79b426c2ce3f9410c4500fafe3430e0d18e9c09d59f82f400cf0ffb679",
+      "after_sha256": "75a55d20839360ddf67b920983df8624e73c9d3763b2eee0a33f69128b8c1aea",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 5869,
+      "before_sha256": "c7d8a492b8d481fea9ac192c52e1820f2c1380f87fcc30eeae96819343957eb2",
+      "after_sha256": "bc30bbb410b36ec5db70f796e27317ce73663f1b5ed7330b52c8fa9014151ab7",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 6409,
+      "before_sha256": "da97eaf617cd682c656c1c1317dc0939b289dacfa9a37af9aa1951337cd871a6",
+      "after_sha256": "e4a1f007ebd3c3cd7a40d191760ee9570d2e364821c4e65681fec980f2ec1d7f",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 7135,
+      "before_sha256": "30c77a1b171a599257140a739fca37f4de26a13d428edcd489ec9ffc9c374ad1",
+      "after_sha256": "0c4ed81e882d22c01099efa14f206e6ed015082e93568e5fba58be79a74c4db0",
+      "reasons": [
+        "Сирена — женское название типа духа, но уничтоженный носитель по оригиналу мужчина; «вместо него» относится к носителю."
+      ]
+    },
+    {
+      "id": 7514,
+      "before_sha256": "75715708b8b4807bbe2171a050a9a6c53fd436a3437e17c6f818a8cc0841a5ce",
+      "after_sha256": "be20fc7f33d327b484035850e24ef128c387fa8654b76f1ee1d74dd3b189281c",
+      "reasons": [
+        "Убираем английское Pack: форма имени уже включает слово «стая».",
+        "Убираем английское Pack: форма имени уже включает слово «стая»."
+      ]
+    },
+    {
+      "id": 7515,
+      "before_sha256": "4676730fd5d77a1563839b7580b8f77f96899f0d88d2a57e61d1f0f6703b88e6",
+      "after_sha256": "527ee5e14d790b972eaeacb4191b36b1f39b57e0d432b6dd46d801832a34db04",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 7516,
+      "before_sha256": "b791159b58510c13c12fa9b3574445ebfb212b91e3dd8bf975b2e7c56b6431b2",
+      "after_sha256": "ad085a2f25a58aac22dbb51e44e22df1c831e56a313d29998e15ebbeb8e9d4eb",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 7518,
+      "before_sha256": "529c608f79e003c08c6273ae506d7fac87750feabb91842f9b9d5513d5fb3547",
+      "after_sha256": "463133560bd4cd6a56edb147b9b76c621ffa99fea6e47351907ae05ebd7d7079",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 7526,
+      "before_sha256": "2d199cfb4f5de2bf3bf92853caa3ae401b02515d3878682e77e493cf2ddb0bf8",
+      "after_sha256": "774c0132cffc3c4a4d8c04718eb659fef95db12bb97ffe153373cfdc399f20be",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 7546,
+      "before_sha256": "2bdd54ea567a34e1b281eb4a41b7c65a95cb0419256f8960ef776622d04bbd6b",
+      "after_sha256": "8a6ad4da2b120fbb4fd46436d653e8bcfcc5114b06da9be65157f93748910ec4",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 7550,
+      "before_sha256": "1b84b609004a98e7575885e7224bd3124bc15b2ee26cd526ff4efd33317b91b8",
+      "after_sha256": "25ba56c0895ee3e51e46bae33d2fecb876f20c513c31ef3aaa7cb91d0d0ab7e9",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 7602,
+      "before_sha256": "d596683beabe9630457b992512da7b731ec75c341a4c74db9d2d47b845d1f776",
+      "after_sha256": "590798c3b9ae3ace9f51f75ed4424740d44e99ec89c2bdf16b4bec832b31d57e",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 7607,
+      "before_sha256": "e922c9fff9a4495d76e1aa82f8fa9d70364eb5c42a5569ddbceab675b889e950",
+      "after_sha256": "a9a5b4de46718dbacb1d9a53e4ef07c675f9b9d325f4fd105be80c05d9ed4fea",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 7608,
+      "before_sha256": "d6e7fbf62f9bd7ab2aed8dc1ae21cf63bc97f0d809a06e2c068b6502f6c686df",
+      "after_sha256": "2e7527c0f4874c885b71f9167be50e84117cd35b0c0f9c29b02c5c6daf00cc56",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 7740,
+      "before_sha256": "0482b8500ac9e8820d156a99d05576add1c5bf0ecdc5fa41f9aa07fd3a9f32b6",
+      "after_sha256": "eb44e851297b5918b38ecf6bd43943d73662f8c3b004e6b486bd29e9daeff1a2",
+      "reasons": [
+        "Родовое слово «стая» в середине предложения пишется со строчной буквы."
+      ]
+    },
+    {
+      "id": 8728,
+      "before_sha256": "cb88eb41ded78e206371321578e3756ee272e0e59ce7b608a22bb28e4ffec548",
+      "after_sha256": "407c424fb953eae27f16691bff7c055d15f2560b1fe3312857f3beb90f6ade52",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 9048,
+      "before_sha256": "278b3e95b536e51972d3119afd051e4b87b2325c03493e8c343f45b585a8c656",
+      "after_sha256": "1ac202199a6f89c10550320340be304bb1b9be52ad093d005d5636a580283be4",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 10065,
+      "before_sha256": "9dbb4ec9694f14c33e0cbcb16b4b193609c0eb3d571dac432688874a90399bc1",
+      "after_sha256": "96c2ee06ba3af936caf9533bdaa5f9594f438d67974dacba32cbadbe3726ba5b",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10072,
+      "before_sha256": "f84b17c8424da2a3d7a8d4d9bac95a2a617baa7bfa7a0864d168d67d52857bf5",
+      "after_sha256": "0f845cbe0ba24f662db7818711eec335bd91b71a0b3f5474a2b9db352173273e",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10142,
+      "before_sha256": "00c5cc1250e2e8bd54d7b7c44613d08bcfd96335f417d19e68125d35b599b432",
+      "after_sha256": "53e6866f7a9340fd165aab5082537f19d3ccebd7551104b4326f8a42c3bee93c",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10145,
+      "before_sha256": "e85f3afefdc3c64a25ac38bb662f5c73d6f7586196ef6ea36d7e18dd8dc8812d",
+      "after_sha256": "3dcec1ec427223b3f456f62a829f6d1155a196a48f063cd337e9a4435eaedb39",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10194,
+      "before_sha256": "25ab14f71de097ce4239e22763f842be33fad994141a9355a0a9d962d0b2bfec",
+      "after_sha256": "2ccdeb529da9f65d850664181571decf57f861b73f3b24cc6d2b0765a7d82ded",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10213,
+      "before_sha256": "d13a954df3e6d41598b26a292e0adb39b085652aa09903fde52b036a91de5e43",
+      "after_sha256": "1f15bd415ad16a786d252558b830856ea1a11d0130e12cee8f5ddd78660ca07e",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10473,
+      "before_sha256": "79ea2cbf22339dcf7f157aade5aa9af705c171840af48389dd7b17e43fd449bb",
+      "after_sha256": "6a4dceb349a2b6faab0010c9bbcf4b09906a0fdfcf7056b496ea73bd7d61d13a",
+      "reasons": [
+        "Родовое слово «стая» в середине предложения пишется со строчной буквы."
+      ]
+    },
+    {
+      "id": 10647,
+      "before_sha256": "98a0d9365a5626e103680bcf4a1671fd1288838be4b622591319ab5c8687661a",
+      "after_sha256": "1104687bd353d1c9256f621a494531f516e28f5c16ffe476c82a6f39182dee9b",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10658,
+      "before_sha256": "f755f68dc0b0633089fa8579b94e752b2273565c0b6bd767cddc44d56de7e6d1",
+      "after_sha256": "521d3f2ed6478f2745bde980417d4df9294c8b1a95aeb42dab3dc53a20a06c89",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10668,
+      "before_sha256": "e4b37fde0887a016d734fec97b2ac20490270d44ae72730f2d8d93226f359c60",
+      "after_sha256": "0af250ecf94a6ffd2089d99cc235d7e4869018b883e9698b7de7e28989446549",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10671,
+      "before_sha256": "065948fd1a37c3e3231598b3f8db385abfd83b39cb4e56022675742dc851b99d",
+      "after_sha256": "8983a8e76557077c45e155a0109217737a6efaf24e8568406ba9f181ebdd0b00",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 10736,
+      "before_sha256": "ed3abf18536f4eff1bdd7e9312b8e1751b4176f7c432a5e49c3e403eee43bebb",
+      "after_sha256": "ad35ae0cbb44fcf8fa3256b9f0b3f10e430aa9003f732fbc2b36e7aca799bc95",
+      "reasons": [
+        "Родовое слово «стая» в середине предложения пишется со строчной буквы."
+      ]
+    },
+    {
+      "id": 10742,
+      "before_sha256": "d13df762b9c8637ce9773bc935f8fe146e9c18be9b49197e1b72d5f5dbc3e502",
+      "after_sha256": "99e50a49f29bb794d73bbd0310857baa73476b0ddc0dd6147dc81a3fff804051",
+      "reasons": [
+        "Родовое слово «стая» в середине предложения пишется со строчной буквы."
+      ]
+    },
+    {
+      "id": 10743,
+      "before_sha256": "cc9de5442deb88eb9922bffdb621d21ac520bfb4aa4c0c63089109ad16e4d778",
+      "after_sha256": "8bade07f1d549fbb99115ed78d0968580f09f1cb833c052bb89722b3784df53c",
+      "reasons": [
+        "Родовое слово «стая» в середине предложения пишется со строчной буквы."
+      ]
+    },
+    {
+      "id": 11083,
+      "before_sha256": "7d534b5be1baaf29f887cd12df04aae6cd6fd288fe2ca5e7ca89d558f076669b",
+      "after_sha256": "0a21f0f2eac5c641e629310d8ea0626d1e23c95e75fecd98413f5835e6fb2170",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 11163,
+      "before_sha256": "67d10c3fc9ded87bb627698ed8d9a36598aef839a7cfec85c4a55cdc5f4e9cf8",
+      "after_sha256": "0c088f2d68f08086f205b11e699fe3280f6a2d55ff9c5b3bef2638a6bfdd918d",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 11165,
+      "before_sha256": "576edab802f4681458bfb59e3bbb27590c2d5fe95f7a5f73a11a100eb53a26b9",
+      "after_sha256": "cc9ebe9afaacd1cd64a34b5df55fbc43599ba5d65cd07df8ab9871e2c2d57ca0",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 11201,
+      "before_sha256": "cdd17e0356d5ab86faffbafb140c670c2ac8cc18f89ef7aa3e1880bb678dd30e",
+      "after_sha256": "3ae4f9ef15eb80f48d47b3fba368ee9b3afb851ceea9f9354608f6ff84b043de",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 11202,
+      "before_sha256": "be2a34370952d1a7adffbe0ec4e733b68dcec908e927b8d6d535d0c1858229f0",
+      "after_sha256": "a2c19cacedc3d80522c926e09e8d6d05da90b5d7821f2b22bd7f151d6cbf5a4d",
+      "reasons": [
+        "Убираем английское Pack: согласованная форма имени уже включает родовое слово."
+      ]
+    },
+    {
+      "id": 11262,
+      "before_sha256": "d8b2285efa79fb69fe14fd30ffdac5dffe18093169f81c5de8481f1fe8de202b",
+      "after_sha256": "bb48dced12ce387a20b804247d427c2884637f6d95fc335b47bc710c5bfcc3e8",
+      "reasons": [
+        "Родовое слово «стая» в середине предложения пишется со строчной буквы."
+      ]
+    },
+    {
+      "id": 12916,
+      "before_sha256": "ebef0ce567d67850b438fc09e99430bff7bbcbea5b4e6b2217377e08f7ffbfcf",
+      "after_sha256": "86ce96acb413130b998ef9270614dbea0293fed129abff23dc939637ca72e3c4",
+      "reasons": [
+        "Видимая подпись связана с авторским bare Puszcza; условный рецепт только после утверждения изменения политики."
+      ]
+    },
+    {
+      "id": 13213,
+      "before_sha256": "d60a995f7d9030bddb50173640132c922bbf80367aaf06c4f00ce2265080a0f1",
+      "after_sha256": "986c6be5c1f07fa9ff48c2c422f31b2d2bafc57903bdee237a48a1e4d2113409",
+      "reasons": [
+        "Перед Анджее нужен предлог «об»."
+      ]
+    },
+    {
+      "id": 13674,
+      "before_sha256": "94dcb6b3cd75beca48d490ead586ed3879b55e1d098d38d83c37687fe935c799",
+      "after_sha256": "570dc084a2f6e97db7f42917a9c0c3cea0053c7d2ca3c90ec63a780f195febed",
+      "reasons": [
+        "Context-checked agreement, terminology or dialogue correction."
+      ]
+    },
+    {
+      "id": 13741,
+      "before_sha256": "03340bbf7f3b9ed3ab822cca69a2e1b3baf217ef35264977f74b0cfcf1b55da6",
+      "after_sha256": "083d1d58ee325d826cd4113861ccd28432dd07574d5f9a86eb2060d7d6ca1831",
+      "reasons": [
+        "По английскому оригиналу реплику произносит Александер, мужчина."
+      ]
+    },
+    {
+      "id": 13861,
+      "before_sha256": "cf60b50b544fb3146892dc24cb7bd90e6cc1ac373a83f753c8ba587dd04264a9",
+      "after_sha256": "cba89cd594528185be9bcd0ac124939821e3ad28112e9389e3ae741368c5f772",
+      "reasons": [
+        "Согласование с Майей, женщиной."
+      ]
+    },
+    {
+      "id": 13904,
+      "before_sha256": "d39427f906c1911608925060ce90ae79a6c5b4d8e6b2645418e0fcebe0f5f349",
+      "after_sha256": "66bb7ad05019b0325896520bf1204ace6e88349eb9eeef9c0c9c4589e79c9cfc",
+      "reasons": [
+        "Перед Эмерике нужен предлог «об»."
+      ]
+    },
+    {
+      "id": 13971,
+      "before_sha256": "6939e113928818d8b4c011ca9c962f53704cad82e4f0a8bf1c46f9022e4b45f8",
+      "after_sha256": "f31e2fa622c95c1e116428d2751085e286b9c2d589254f196c49c03c26f7a3fc",
+      "reasons": [
+        "Перед Анджее нужен предлог «об»."
+      ]
+    }
+  ],
+  "runtime_checks": {
+    "names": {
+      "passed": true,
+      "report_sha256": "b4ad76d70c357da79345c5fd08d15992e984d6ebe59fdeb68678c930bcb6fbf8"
+    },
+    "forms": {
+      "passed": true,
+      "report_sha256": "3b8c3936be27c6c57afa97002b7a7ee8e78390a2ca342f45490968658f54d95a"
+    },
+    "ui": {
+      "passed": true,
+      "report_sha256": "b5895a607f0ca39568e74e7b269a887a19e463c90e98955dd03bed8b12d7cca0"
+    },
+    "summaries": {
+      "passed": true,
+      "report_sha256": "b7cee1fdfb3f4cb96bed8e5dbe2d03d0045af074b5f38391be8d3aca3b35e4f3"
+    },
+    "renown": {
+      "passed": true,
+      "report_sha256": "d043f2be0692887ca31f9959f14a46944ffadaa0a858b296c5089cde56c1dd1f"
+    },
+    "continuations": {
+      "passed": true,
+      "report_sha256": "a29cda07fcd8af6656095da29f12ae9602af567e54d6a1e1df1ff469d3afa6e9"
+    }
+  },
+  "live_visual_qa": "Installed build: Russian character name observed in HUD/sheet; four available form descriptions visually checked after fresh launch. See form-render-review.json for DLL/story pins and limitations. Not an all-branches gameplay claim."
+}

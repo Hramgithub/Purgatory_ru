@@ -36,7 +36,11 @@ foreach ($location in $locations) {
     if ($originalFields.Count -ne 7 -or $translatedFields.Count -ne 7) {
         throw "Expected 7 quoted fields at $location; EN=$($originalFields.Count), RU=$($translatedFields.Count)"
     }
-    if ($commands[1] -match '[«»“”]') { throw "Typographic quote in command at $location" }
+    # Russian quotation marks are legitimate INSIDE display descriptions.
+    # Only ASCII quotes delimit renderer fields; don't reject prose quotes
+    # after the seven-field parser has already verified those delimiters.
+    $metadata = [regex]::Replace($commands[1], '"[^"]*"', '')
+    if ($metadata -match '[«»“”]') { throw "Typographic quote in command metadata at $location" }
     $counts = @()
     foreach ($index in 2..5) {
         $before = $originalFields[$index].Split('|').Count

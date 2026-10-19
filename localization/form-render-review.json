@@ -1,0 +1,29 @@
+{
+  "format": 1,
+  "date": "2026-10-20",
+  "passed": true,
+  "dll_sha256": "d3ae0eb5846792d225c78a70cb65547f8ea053e27230bd071faf5192ecbad734",
+  "story_sha256": "d9a82ee78f2db6bf87a850a248776f129ca47a0795c6f85d40422b4476799798",
+  "method": "Fresh Steam launch, actual ChangeForm window, pointer-only selection, visual inspection of complete descriptions and renderer log. No transformation confirmed.",
+  "previous_candidate_failed_live_qa": true,
+  "first_native_material_mismatch_observed": true,
+  "final_native_material_matches": true,
+  "explicit_canvas_texture_binding": true,
+  "regular_and_bold_text_readable": true,
+  "cases": [
+    {"form": "glabro", "passed": true, "characters": 73, "atlas_mismatches": 0, "overflow": false, "rechecked_after_switching": true},
+    {"form": "crinos", "passed": true, "characters": 81, "atlas_mismatches": 0, "overflow": false},
+    {"form": "hispo", "passed": true, "characters": 63, "atlas_mismatches": 0, "overflow": false},
+    {"form": "lupus", "passed": true, "characters": 91, "atlas_mismatches": 0, "overflow": false}
+  ],
+  "limitations": [
+    "Homid is the current form and its button is disabled; its description was tested through Ink, not by selecting it in this live window.",
+    "This is the observed Windows/Steam configuration, not a claim about all resolutions, systems or complete gameplay branches."
+  ],
+  "local_screenshot_evidence_sha256": {
+    "glabro": "6a3505668158a749dddd7b9143ddcc08176e37b1efb52ea4cd910989b2d8466a",
+    "crinos": "cbaa07935822d822dbeda3f541483ad345a2fae8376e9a1b5a7b9afcae3d2dce",
+    "hispo": "f18bac98ea96eafbf2e1e72838f58f71bfd2e0493a6b6290bb84d9788100f2e7",
+    "lupus": "663f4d746a2cb4256235c736a0666cbc1a7b418ac09ae9f86951236a1b0899a9"
+  }
+}

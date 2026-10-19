@@ -1,0 +1,515 @@
+{
+  "format": 1,
+  "items": [
+    {
+      "path": [
+        "root",
+        0,
+        1701
+      ],
+      "source_sha256": "ddd1bd98674eaf6f9a1caad418beda35a0eb549f6c5d3f1d0ea8876eb041c8ca",
+      "translation": "^<link=maia>Майя</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1712
+      ],
+      "source_sha256": "ddd1bd98674eaf6f9a1caad418beda35a0eb549f6c5d3f1d0ea8876eb041c8ca",
+      "translation": "^<link=maia>Майя</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1723
+      ],
+      "source_sha256": "0fd13011e9582506edc119fee5fd69c621db04cc03a7b5b53c2457b562fbb4a2",
+      "translation": "^<link=daniel>Даниэль</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1734
+      ],
+      "source_sha256": "0fd13011e9582506edc119fee5fd69c621db04cc03a7b5b53c2457b562fbb4a2",
+      "translation": "^<link=daniel>Даниэль</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1756
+      ],
+      "source_sha256": "33c7be15b57d152a3e05ad991aa76366a9fb1d388fec42a3e7293423e6b4954a",
+      "translation": "^<link=kim>Ким</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1767
+      ],
+      "source_sha256": "33c7be15b57d152a3e05ad991aa76366a9fb1d388fec42a3e7293423e6b4954a",
+      "translation": "^<link=kim>Ким</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1778
+      ],
+      "source_sha256": "b8fb68812951f6e9d30ffb42fe265d157620da42cefb4780417f2370d58a83d2",
+      "translation": "^<link=lisa>Лиза</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1789
+      ],
+      "source_sha256": "b8fb68812951f6e9d30ffb42fe265d157620da42cefb4780417f2370d58a83d2",
+      "translation": "^<link=lisa>Лиза</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1800
+      ],
+      "source_sha256": "28422aca200bec7a92b48a500a13198d8d899b6b3ac61bfa71a9428e1bd3d14c",
+      "translation": "^<link=olga>Ольга</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1811
+      ],
+      "source_sha256": "28422aca200bec7a92b48a500a13198d8d899b6b3ac61bfa71a9428e1bd3d14c",
+      "translation": "^<link=olga>Ольга</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1822
+      ],
+      "source_sha256": "7771e7ae58fa88d3603e05b28b4762314e1f67c544d74af91c41ce7a2987c29e",
+      "translation": "^<link=pat>Пэт</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1833
+      ],
+      "source_sha256": "7771e7ae58fa88d3603e05b28b4762314e1f67c544d74af91c41ce7a2987c29e",
+      "translation": "^<link=pat>Пэт</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1877
+      ],
+      "source_sha256": "9606ea59d4b60b8a81f0b03b472e38b7a9bcbb2f552d7d10ccb952a132c315a4",
+      "translation": "^<link=khadija>Хадиджа</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1888
+      ],
+      "source_sha256": "85249677073f47f4f8fb944570eed4d7f157def33796640655e04e6a98c5e8e2",
+      "translation": "^<link=ilona>Илона</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1899
+      ],
+      "source_sha256": "de44751cf96505c721139de15133be900e1d94d82c8ce4e601826a9198ccc74e",
+      "translation": "^<link=andrzej>Анджей</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1910
+      ],
+      "source_sha256": "ff6e74efe582972b45ecb44439ebe5143a32bcd03102589562e07ab2a79bc8ed",
+      "translation": "^<link=aleksander>Александер</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1921
+      ],
+      "source_sha256": "3611d1a9cea9310b681b323f2915ad5f725984715ddabf6d129c078bd6523294",
+      "translation": "^<link=victoria>Виктория</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1932
+      ],
+      "source_sha256": "055d73e8b38323f9c8d297a6419780a0c6c48a15e1ccd29d9b0b6a65ef7e2ca4",
+      "translation": "^<link=zuzanna>Зузанна</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        0,
+        1943
+      ],
+      "source_sha256": "ed42c7525ec3822cacc69999ed4644713c058b80e7cbfb82bfbe02c3b2c58e52",
+      "translation": "^<link=tariq>Тарик</link>",
+      "reason": "visible-tooltip-label"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "getNameString",
+        0,
+        10,
+        "b",
+        1
+      ],
+      "source_sha256": "990fbbbff2df14c0ef5e2616e8d80d057e781bbb69f43ff10da96c10187a0186",
+      "translation": "^Зохаль",
+      "reason": "generated-name-helper"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "getNameString",
+        1,
+        10,
+        "b",
+        1
+      ],
+      "source_sha256": "924953a66c0a367ddefe0cb55d9625701f19178c1739891ef4f1deecfa02ba6e",
+      "translation": "^Куой",
+      "reason": "generated-name-helper"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "getNameString",
+        2,
+        10,
+        "b",
+        1
+      ],
+      "source_sha256": "c014a28982b1f67650d4729e88e08c853345cbb4fb138e9c86bc49d82e0e70d3",
+      "translation": "^Мину",
+      "reason": "generated-name-helper"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "getNameString",
+        3,
+        10,
+        "b",
+        1
+      ],
+      "source_sha256": "8ab727f2baa3b6aeee82c43968f80b232db429587b537233814ea7ea0d480a6c",
+      "translation": "^Париса",
+      "reason": "generated-name-helper"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "getNameString",
+        4,
+        10,
+        "b",
+        1
+      ],
+      "source_sha256": "cc72a3a5eb7dbec8c4911a30d91e9d0851a506f0296b5814afa4162e2ee9bb78",
+      "translation": "^Азаде",
+      "reason": "generated-name-helper"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "getNameString",
+        5,
+        1,
+        "b",
+        1
+      ],
+      "source_sha256": "1a074a012c83ce4eab28c8f9a190df3a8ef55ae04deb3be299d79cbc13b6f3bf",
+      "translation": "^Самира",
+      "reason": "generated-name-helper"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "memory1",
+        1,
+        "wyrm",
+        0,
+        1,
+        "g-4",
+        2,
+        50,
+        8,
+        "b",
+        11
+      ],
+      "source_sha256": "2089f59818bc0f34fd130cc8ee1f13089ac15e62d881a6ceeaf70e3e7c0833d4",
+      "translation": "^>>> END-STORY \"Спасибо, что сыграли в демоверсию <b>Werewolf: The Apocalypse – Purgatory</b>.$LINEBREAK$$LINEBREAK$У Самиры, за которую играли <b>вы</b>, было ",
+      "reason": "command-metadata"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "home2",
+        1,
+        "checkphone",
+        0,
+        3,
+        "g-1",
+        5,
+        4
+      ],
+      "source_sha256": "0be41cd647580e55a34e6daa7e43fb0c806b55b18ac0aa117aab98837d2dd73a",
+      "translation": "^Пэт.",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "home2",
+        1,
+        "checkphone",
+        0,
+        3,
+        "g-1",
+        5,
+        10
+      ],
+      "source_sha256": "803641e3035e8bb11d3657ad71e92315b7bfd4d1c694914f6475a0be407447d6",
+      "translation": "^Александер.",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "a_alleyway",
+        0,
+        5,
+        2,
+        15,
+        "c-0",
+        2,
+        1,
+        11,
+        "s",
+        0
+      ],
+      "source_sha256": "bbce4cb57bdaa4a6c8d6391b6d9379e09a448d96bc47691c3d4f81b0267a291e",
+      "translation": "^Анджей?",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "a_alleyway",
+        0,
+        5,
+        2,
+        15,
+        "c-0",
+        2,
+        2,
+        11,
+        "s",
+        0
+      ],
+      "source_sha256": "f21003b0d048aa9ed3beb9b5a1e8485c47bca8712b2feebd53753e3195da9182",
+      "translation": "^Илона?",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "p_vxcorp_front",
+        1,
+        "jobinterviewfront",
+        0,
+        7,
+        "g-6",
+        3,
+        2,
+        2,
+        4
+      ],
+      "source_sha256": "a980e89647495f6428503e63036803168f15c3026eb2c7f6c1b5547f5a0477f1",
+      "translation": "^Анна Новак.",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "a_train",
+        1,
+        "train_inside",
+        0,
+        1,
+        "g-16",
+        4
+      ],
+      "source_sha256": "91e81ea2741a10ac951ba1dfc831a5712241e9bc94c2b64ce33cd85e34a12ea6",
+      "translation": "^Майя.",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "a_train",
+        1,
+        "train_inside",
+        0,
+        1,
+        "g-16",
+        10
+      ],
+      "source_sha256": "a2c5f8fa3d89531021ba64d85cbb12a54e015374e105048ecb38f8d28155641e",
+      "translation": "^Ольга.",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "michalowo",
+        1,
+        "crowd",
+        0,
+        0,
+        2,
+        2,
+        3,
+        8
+      ],
+      "source_sha256": "986f37c6c1fc588c3a31d8ff6754b9348b807f10da1cf7923662b49dca8d5d7d",
+      "translation": "^Тарик!",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "a_michalowo",
+        1,
+        "crowd",
+        0,
+        0,
+        2,
+        2,
+        3,
+        8
+      ],
+      "source_sha256": "986f37c6c1fc588c3a31d8ff6754b9348b807f10da1cf7923662b49dca8d5d7d",
+      "translation": "^Тарик!",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "umbra",
+        1,
+        "goodwolf",
+        0,
+        7,
+        "g-4",
+        2,
+        26,
+        "c-5",
+        6,
+        2
+      ],
+      "source_sha256": "a2c5f8fa3d89531021ba64d85cbb12a54e015374e105048ecb38f8d28155641e",
+      "translation": "^Ольга.",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "umbra",
+        1,
+        "goodwolf",
+        0,
+        7,
+        "g-4",
+        2,
+        26,
+        "c-5",
+        6,
+        8
+      ],
+      "source_sha256": "91e81ea2741a10ac951ba1dfc831a5712241e9bc94c2b64ce33cd85e34a12ea6",
+      "translation": "^Майя.",
+      "reason": "visible-text-fragment"
+    },
+    {
+      "path": [
+        "root",
+        2,
+        "epilogues",
+        1,
+        "finish",
+        0,
+        24,
+        18
+      ],
+      "source_sha256": "ef2e9e16f88de57799c1cf20b3d88c4626b777084f53160d22612252fa365b87",
+      "translation": "^>>> END-STORY \"Подойдите, соберитесь под светом Луны, сядьте в самом сердце каэрна. Послушайте историю Самиры Рахмани, известной среди <b>Гару</b> как ",
+      "reason": "command-metadata"
+    }
+  ]
+}

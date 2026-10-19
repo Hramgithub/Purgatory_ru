@@ -21,6 +21,8 @@ from render_overrides import load_overrides, apply_override, approved_name_audit
 from render_overrides import load_path_restorations, restore_paths
 from render_overrides import load_corrections_audit
 from translate_ink_gpt import TAG_RE
+from name_localization import load_name_policy, load_name_forms, apply_name_forms, restore_technical_literals
+from name_localization import apply_name_fragments
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -57,6 +59,9 @@ def main() -> int:
     catalog = load_catalog(args.localization_dir, story)
     by_id = {int(item["id"]): item for item in catalog}
     overrides = load_overrides(args.localization_dir)
+    name_policy = load_name_policy(args.localization_dir)
+    name_forms = load_name_forms(args.localization_dir)
+    used_name_ids = set()
     if set(overrides) - set(by_id):
         raise ValueError('render override IDs absent from source index')
     name_deltas, name_audit = approved_name_audit(story, catalog, overrides,
@@ -91,6 +96,10 @@ def main() -> int:
                 if unmasked.count("\n") != source_item["body"].count("\n"):
                     raise ValueError("newline count changed")
                 unmasked = apply_override(source_item, unmasked, overrides)
+                if name_policy:
+                    unmasked = apply_name_forms(item_id, unmasked, name_policy, name_forms)
+                    if item_id in name_forms:
+                        used_name_ids.add(item_id)
                 translated[item_id] = source_item["prefix"] + unmasked
             except Exception as exc:  # noqa: BLE001
                 errors.append(f"{path.name}: id={entry.get('id')}: {exc}")
@@ -99,6 +108,10 @@ def main() -> int:
     source_map = {by_id[item_id]["source"]: text for item_id, text in translated.items()}
     assembled = replace_strings(story, source_map)
     restored = restore_paths(story, assembled, load_path_restorations(args.localization_dir))
+    technical_restored = restore_technical_literals(story, assembled)
+    name_fragments = apply_name_fragments(story, assembled, args.localization_dir)
+    if set(name_forms) != used_name_ids:
+        errors.append('name review contains unconsumed IDs')
     syntax_errors = contract_errors(story, assembled)
     errors.extend(f'renderer contract: {error}' for error in syntax_errors)
     write_json(args.output, assembled)
@@ -116,6 +129,10 @@ def main() -> int:
         "approved_name_count_deltas": name_deltas,
         "path_restorations": restored,
         "source_corrections_audit": load_corrections_audit(args.localization_dir),
+        "localized_name_ids": len(used_name_ids),
+        "localized_name_occurrences": sum(len(name_forms[i]['forms']) for i in used_name_ids),
+        "restored_technical_literals": technical_restored,
+        "localized_name_fragments": name_fragments,
     }
     write_json(args.report, report)
     print(json.dumps(report, ensure_ascii=True, indent=2))

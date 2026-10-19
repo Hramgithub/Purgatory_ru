@@ -13,7 +13,7 @@ public sealed partial class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "ru.hramgithub.purgatory.localization";
     public const string PluginName = "Purgatory Russian Localization";
-    public const string PluginVersion = "0.1.4";
+    public const string PluginVersion = "0.1.5";
 
     private const string StoryMarker = "\"^wod02Completed\"";
     private static string? replacementStory;
@@ -38,10 +38,14 @@ public sealed partial class Plugin : BaseUnityPlugin
         }
 
         replacementStory = candidate;
+        LoadDisplayNames();
         harmony = new Harmony(PluginGuid);
         harmony.PatchAll(typeof(StoryConstructorPatch));
         harmony.PatchAll(typeof(FallbackFontFacePatch));
         harmony.PatchAll(typeof(CyrillicTextPatch));
+        harmony.PatchAll(typeof(DisplayNameTextPatch));
+        harmony.PatchAll(typeof(FormCanvasPreRenderPatch));
+        harmony.PatchAll(typeof(FormCanvasMaterialPatch));
         StartCoroutine(InstallCyrillicFallback());
         Logger.LogInfo($"Loaded Russian Ink story ({candidate.Length:N0} characters)." );
     }

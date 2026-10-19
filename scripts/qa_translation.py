@@ -15,8 +15,10 @@ from renderer_commands import command_arguments, contract_errors, technical_lite
 from translation_catalog import load_catalog
 from render_overrides import load_overrides, apply_override, approved_name_audit
 from render_overrides import load_corrections_audit
+from render_overrides import load_path_restorations
 from translate_ink_gpt import TAG_RE
 from collections import Counter
+from name_localization import load_name_policy, load_name_forms, canonical_name_story, visible_name_occurrences
 
 
 def write_json(path: Path, value: Any) -> None:
@@ -65,6 +67,47 @@ def main() -> int:
     structural_errors = list(same_shape(source, translated))
     source_by_path = dict(walk(source))
     translated_by_path = dict(walk(translated))
+    name_policy = load_name_policy(args.localization_dir)
+    name_checks = {'enabled': False, 'errors': []}
+    expected_name_story = None
+    if name_policy:
+        chunk_translations, chunk_errors = {}, []
+        for chunk in sorted((args.localization_dir / 'ru').glob('chunk-*.json')):
+            try:
+                for entry in load_json(chunk)['items']:
+                    item_id = int(entry['id'])
+                    if item_id in chunk_translations:
+                        chunk_errors.append({'id': item_id, 'error': 'duplicate RU chunk ID'})
+                    else:
+                        chunk_translations[item_id] = entry['translation']
+            except (ValueError, KeyError, TypeError, OSError):
+                chunk_errors.append({'error': 'unreadable RU chunk', 'chunk': chunk.name})
+        expected_name_story, name_checks = canonical_name_story(
+            source, catalog, chunk_translations, name_policy, load_name_forms(args.localization_dir),
+            overrides, load_path_restorations(args.localization_dir), args.localization_dir)
+        name_checks['errors'].extend(chunk_errors)
+        technical_paths = {row['path'] for row in technical_literal_paths(source)}
+        item_ids = {item['source']: int(item['id']) for item in catalog}
+        compared = 0
+        for path, expected_text in walk(expected_name_story):
+            if not isinstance(expected_text, str):
+                continue
+            compared += 1
+            actual = translated_by_path.get(path)
+            item_id = item_ids.get(source_by_path.get(path))
+            if actual != expected_text:
+                name_checks['errors'].append({
+                    'id': item_id, 'path': list(path), 'error': 'canonical assembled text mismatch',
+                    'expected_sha256': hashlib.sha256(expected_text.encode()).hexdigest(),
+                    'actual_sha256': hashlib.sha256(actual.encode()).hexdigest() if isinstance(actual, str) else None,
+                })
+            if (item_id is not None and path not in technical_paths and isinstance(actual, str)
+                    and visible_name_occurrences(actual.removeprefix('^'), name_policy)):
+                name_checks['errors'].append({'id': item_id, 'path': list(path),
+                                              'error': 'residual visible English policy name'})
+        name_checks['compared_string_occurrences'] = compared
+        name_checks['error_count'] = len(name_checks['errors'])
+        name_checks['errors'] = name_checks['errors'][:200]
 
     unchanged: list[dict[str, Any]] = []
     cyrillic_count = 0
@@ -99,31 +142,53 @@ def main() -> int:
         if before in arguments and before.count('"') != after.count('"'):
             renderer_command_errors.append({"id": item["id"], "command": "quote delimiters"})
         if before == after:
-            unchanged.append({"id": item["id"], "text": item["body"], "path": item["first_path"]})
+            unchanged.append({"id": item["id"], "sha256": hashlib.sha256(before.encode()).hexdigest(),
+                              "characters": len(before), "path": item["first_path"]})
         if re.search(r"[А-Яа-яЁё]", after):
             cyrillic_count += 1
 
     protected_mismatches: list[dict[str, Any]] = []
     name_deltas, name_correction_audit = approved_name_audit(source, catalog, overrides,
                                                           load_corrections_audit(args.localization_dir))
+    protected_name_counts = []
     for term in SKILLS_AND_GIFTS + KNOWN_CHARACTER_NAMES:
         before_count = count_occurrences(source, term)
         after_count = count_occurrences(translated, term)
-        expected_count = before_count + name_deltas.get(term, 0)
+        if term in KNOWN_CHARACTER_NAMES and expected_name_story is not None:
+            expected_count = count_occurrences(expected_name_story, term)
+        else:
+            expected_count = before_count + name_deltas.get(term, 0)
+        if term in KNOWN_CHARACTER_NAMES and expected_name_story is not None:
+            protected_name_counts.append({'term': term, 'source_count': before_count,
+                                          'expected_count': expected_count, 'translated_count': after_count,
+                                          'allowed_localization_delta': expected_count - before_count})
         if expected_count != after_count:
             protected_mismatches.append(
                 {"term": term, "source_count": before_count, "expected_count": expected_count,
-                 "translated_count": after_count}
+                 "translated_count": after_count,
+                 "expected_basis": 'reviewed-name-canonical' if term in KNOWN_CHARACTER_NAMES and expected_name_story is not None
+                 else 'source-plus-approved-corrections'}
             )
+    if name_policy:
+        name_checks['protected_name_count_basis'] = 'all-path canonical reconstruction from hash-pinned reviewed forms'
+        name_checks['protected_name_counts'] = protected_name_counts
 
     unresolved_placeholders = [
-        {"path": list(path), "text": value}
+        {"path": list(path), "sha256": hashlib.sha256(value.encode()).hexdigest(),
+         "placeholder_count": len(re.findall(r"⟦T\d{3}⟧", value))}
         for path, value in walk(translated)
         if isinstance(value, str) and re.search(r"⟦T\d{3}⟧", value)
     ]
     marker_present = any(
         value == "^wod02Completed" for _, value in walk(translated) if isinstance(value, str)
     )
+    # Contract diagnostics identify source locations without redistributing
+    # an exact technical literal which might itself contain game prose.
+    for error in renderer_command_errors:
+        if 'syntax' in error:
+            syntax = error.pop('syntax')
+            error['syntax_sha256'] = hashlib.sha256(syntax.encode()).hexdigest()
+            error['syntax_characters'] = len(syntax)
     report = {
         "sourceSha256": hashlib.sha256(args.source.read_bytes()).hexdigest(),
         "storySha256": hashlib.sha256(args.translated.read_bytes()).hexdigest(),
@@ -142,12 +207,14 @@ def main() -> int:
         "approved_name_corrections": name_correction_audit,
         "approved_name_count_deltas": name_deltas,
         "source_corrections_audit": load_corrections_audit(args.localization_dir),
+        "name_localization": name_checks,
         "story_marker_present": marker_present,
         "passed": not structural_errors
         and not protected_mismatches
         and not unresolved_placeholders
         and not renderer_command_errors
         and not markup_errors
+        and not name_checks.get('error_count', 0)
         and marker_present,
     }
     write_json(args.report, report)

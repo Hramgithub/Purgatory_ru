@@ -1,0 +1,4 @@
+# Keep byte-pinned localization receipts reproducible with Git autocrlf on Windows.
+localization/name-*.json -text
+localization/retained-terms.json -text
+localization/form-render-review.json -text

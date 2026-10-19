@@ -1,0 +1,19 @@
+{
+  "format": 1,
+  "date": "2026-10-20",
+  "version": "0.1.5",
+  "scope": "Final installer ZIP; source publication is additionally scanned before pushing.",
+  "archive": "Purgatory-RU-0.1.5.zip",
+  "sha256": "a855b60380e8bf65be5c63ffdf68abeec6edc3db3cb4eefad695c75ca159903c",
+  "dll_sha256": "d3ae0eb5846792d225c78a70cb65547f8ea053e27230bd071faf5192ecbad734",
+  "story_sha256": "d9a82ee78f2db6bf87a850a248776f129ca47a0795c6f85d40422b4476799798",
+  "manifest_files": 48,
+  "zip_members": 49,
+  "manifest_errors": [],
+  "gitleaks": {"version": "8.30.1", "official_scanner_checksum_verified": true, "package_findings": 0},
+  "private_paths_or_symbols": 0,
+  "debug_type": "none",
+  "debug_symbols": false,
+  "passed": true,
+  "limitations": ["Point-in-time verification of this exact archive; later modifications require a new audit."]
+}

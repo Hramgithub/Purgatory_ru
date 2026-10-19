@@ -95,7 +95,7 @@ Homid=Хомид; Glabro=Глабро; Crinos=Кринос; Hispo=Хиспо; Lu
 Ragabash=Рагабаш; Theurge=Теург; Philodox=Филодокс;
 Galliard=Галлиард; Ahroun=Ахрун;
 Black Furies=Чёрные Фурии; Shadow Lords=Повелители Теней;
-Glass Walkers=Стеклоходы; Bone Gnawers=Костеглодатели;
+Glass Walkers=Стеклоходы; Bone Gnawers=Костегрызы;
 Silver Fangs=Серебряные Клыки.
 
 Return one JSON object only, with this exact shape:

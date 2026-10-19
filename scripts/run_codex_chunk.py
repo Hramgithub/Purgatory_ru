@@ -19,7 +19,7 @@ Homid=Хомид; Glabro=Глабро; Crinos=Кринос; Hispo=Хиспо; Lu
 Ragabash=Рагабаш; Theurge=Теург; Philodox=Филодокс;
 Galliard=Галлиард; Ahroun=Ахрун; Black Furies=Чёрные Фурии;
 Shadow Lords=Повелители Теней; Glass Walkers=Стеклоходы;
-Bone Gnawers=Костеглодатели; Silver Fangs=Серебряные Клыки."""
+Bone Gnawers=Костегрызы; Silver Fangs=Серебряные Клыки."""
 
 PROTECTED_NAMES = """Samira Rahmani, Khadija, Ilona, Andrzej Skarżyński,
 Aleksander, Victoria, Zuzanna, Tariq, Emeryk, Helena Zielińska,

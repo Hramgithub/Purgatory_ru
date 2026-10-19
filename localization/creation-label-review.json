@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "date": "2026-10-20",
+  "scope": "Local unreleased candidate after v0.1.5, actual tribe-selection window",
+  "dll_sha256": "895faaed6c993b58716c5d9916032d1eb8669a6e91aadd46b0248cb986a35e9b",
+  "visually_checked_story_sha256": "c19ec22f8e8177ea2b4717fca4024659e594b3235cf5e45b8d87250207423725",
+  "window_pixels": [1442, 842],
+  "uniform_tmp_font_size": 20.2,
+  "labels": ["Чёрные\nФурии", "Костегрызы", "Стеклоходы", "Повелители\nТеней", "Серебряные\nКлыки"],
+  "checks": {
+    "actual_steam_restart": true,
+    "all_five_labels_visually_readable": true,
+    "no_intra_word_breaks": true,
+    "no_tribe_choice_confirmed": true,
+    "user_accepted_result": true,
+    "vanilla_game_file_hashes_unchanged": true
+  },
+  "earlier_candidate": {
+    "dll_sha256": "9774dcf789d3d9b000c6956a266dd5601b52ceeafaee4112b14f77cdaec6088d",
+    "uniform_tmp_font_size": 10.6,
+    "passed": false,
+    "reason": "Fitted two lines to the native one-line label rectangle; visibly too small. Replaced locally, not published."
+  },
+  "passed": true,
+  "limitations": [
+    "Normal state checked at one window size; other resolutions and all five hover/focus states are not claimed.",
+    "This receipt does not claim a fresh visual check of the separate form-selection window.",
+    "The later hunger wording change at ID 915 was source-checked separately, not replayed in this scene."
+  ]
+}

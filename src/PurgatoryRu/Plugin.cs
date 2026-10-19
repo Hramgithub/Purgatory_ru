@@ -46,6 +46,7 @@ public sealed partial class Plugin : BaseUnityPlugin
         harmony.PatchAll(typeof(DisplayNameTextPatch));
         harmony.PatchAll(typeof(FormCanvasPreRenderPatch));
         harmony.PatchAll(typeof(FormCanvasMaterialPatch));
+        harmony.PatchAll(typeof(CreationLabelsPatch));
         StartCoroutine(InstallCyrillicFallback());
         Logger.LogInfo($"Loaded Russian Ink story ({candidate.Length:N0} characters)." );
     }

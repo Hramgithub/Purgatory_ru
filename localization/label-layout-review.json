@@ -1,0 +1,146 @@
+{
+  "format": 1,
+  "date": "2026-10-21",
+  "status": "offline_candidate_not_installed_or_live_verified",
+  "client_restarted_for_this_expanded_pass": false,
+  "source_sha256": "91b8666e021b977f1371f713bea804e823b0fd7eaf2c5e5baf95b5c267006265",
+  "story_sha256": "28f901eca9dfca5f0c57a45c15aba31bcf3a1d638c62a91ab2d20b642b08a32a",
+  "candidate_plugin_sha256": "e024f68cababb2447a4a033e850ef5246810db06722f6a1df4041fd3a23ce965",
+  "creation_policy_sha256_lf": "1441a44be233d4b4ae36cf8615c703d9a6c1bc762c3be022b82bc2caf7cdd146",
+  "compact_policy_sha256_lf": "8ff0f7e50252884e70920eef34179a406870e380bdad08163775cc1cab23a05e",
+  "scanned_asset_files": 17,
+  "serialized_tmp_objects": 193,
+  "unresolved_object_headers": 2,
+  "object_categories": {
+    "empty_dynamic_or_numeric_template": 36,
+    "exact_compact_ui_policy": 92,
+    "native_multiline_prompt_or_explicit_break": 11,
+    "original_credit_retained_term_or_runtime_body_template": 36,
+    "anchored_runtime_caption_policy": 7,
+    "creation_widget_dynamic_group_title_or_body": 8,
+    "exact_display_name_policy": 3
+  },
+  "creation_groups": [
+    {
+      "group": "PhysicalSkills",
+      "path": "introduction.0.73",
+      "options": 3,
+      "labels": [
+        "Athletics",
+        "Stealth",
+        "Survival"
+      ],
+      "word_only_breaks": true
+    },
+    {
+      "group": "SocialSkills",
+      "path": "introduction.0.109",
+      "options": 3,
+      "labels": [
+        "Animal Ken",
+        "Intimidation",
+        "Persuasion"
+      ],
+      "word_only_breaks": true
+    },
+    {
+      "group": "MentalSkills",
+      "path": "introduction.0.145",
+      "options": 3,
+      "labels": [
+        "The Occult",
+        "Medicine",
+        "Technology"
+      ],
+      "word_only_breaks": true
+    },
+    {
+      "group": "Rage",
+      "path": "introduction.rage.0.7",
+      "options": 3,
+      "labels": [
+        "Низкий",
+        "Средний",
+        "Высокий"
+      ],
+      "word_only_breaks": true
+    },
+    {
+      "group": "Harano",
+      "path": "introduction.harano.0.2",
+      "options": 2,
+      "labels": [
+        "Низкий",
+        "Высокий"
+      ],
+      "word_only_breaks": true
+    },
+    {
+      "group": "Auspice",
+      "path": "home.0.g-13.4",
+      "options": 5,
+      "labels": [
+        "Рагабаш",
+        "Теург",
+        "Филодокс",
+        "Галлиард",
+        "Ахрун"
+      ],
+      "word_only_breaks": true
+    },
+    {
+      "group": "Tribe",
+      "path": "caern.intothecaern.0.g-3.4",
+      "options": 5,
+      "labels": [
+        "Чёрные Фурии",
+        "Костегрызы",
+        "Стеклоходы",
+        "Повелители Теней",
+        "Серебряные Клыки"
+      ],
+      "word_only_breaks": true
+    },
+    {
+      "group": "Patron",
+      "path": "garoubar.aleksander.0.8.2.2.4",
+      "options": 3,
+      "labels": [
+        "«Зловещая выдра»",
+        "«Мистическая рысь»",
+        "«Бессмертный павлин»"
+      ],
+      "word_only_breaks": true
+    }
+  ],
+  "creation_options": 27,
+  "explicit_compact_captions": 57,
+  "native_multiline_prompts_and_explicit_breaks": [
+    "Cloud save newer than local save has been found.",
+    "Controller disconnected.\nplease connect a controller and press a.",
+    "Let's see how many players made the same choices as you...",
+    "Switch to\\nCharacter Sheet",
+    "Willpower",
+    "You can regain <b>Willpower</b>, when you pursue the main quest.",
+    "You have played the demo, a short excerpt from a full game, but Samira and you still have <b>many choices</b> left to make. Will you investigate the <b>murdered werewolf</b> with Pat or will you uncover the <b>dark secrets</b> lurking within the Wolf-father Pack with Aleksander?\r\n\nYour journey will take you throughout <b>Warsaw</b> and to the edges of Poland in the primeval wilderness of <b>Białowieża Forest</b>. Yet will this thrilling journey end in <b>triumph</b>…or <b>despair</b>?\r\n\nThe choice is up to you in the full release of <b>Werewolf: The Apocalypse - Purgatory</b>.\r",
+    "Your progress will be deleted. Are you sure?",
+    "thanks for playing the demo",
+    "work in progress – not final quality"
+  ],
+  "previous_patron_only_live_check": {
+    "passed": true,
+    "plugin_sha256": "f668bd4747b7ef429272616f58f6376f5e070d113180663f553a4b449964d489",
+    "labels": 3,
+    "uniform_font_size": 20.2,
+    "word_only_breaks": true,
+    "not_proof_for_expanded_candidate": true
+  },
+  "limitations": [
+    "Serialized templates are not all runtime strings; classification does not prove visual fit.",
+    "Two object headers could not be resolved; they are not claimed reviewed TMP elements.",
+    "Narrative, long tooltips, consent prompts, save metadata and explicit multiline text retain native wrapping.",
+    "Expanded candidate is build/test verified only; no live QA, installation, publication or save replacement is claimed.",
+    "Skills and Gifts retain their source wording; only label layout changes.",
+    "The published v0.1.6 package and its historical receipts remain unchanged."
+  ]
+}

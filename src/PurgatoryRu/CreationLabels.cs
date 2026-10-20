@@ -15,19 +15,6 @@ public sealed partial class Plugin
     private static readonly FieldInfo? CreationButtonsField = CreationWidgetType == null ? null : AccessTools.Field(CreationWidgetType, "buttons");
     private static readonly FieldInfo? CreationIconsField = CreationWidgetType == null ? null : AccessTools.Field(CreationWidgetType, "buttonsIcons");
     private static readonly FieldInfo? CreationInfoField = CreationWidgetType == null ? null : AccessTools.Field(CreationWidgetType, "infoDumpText");
-    private static readonly string[] TribeIcons = {
-        "CharacterCreation_Tribe_BlackFuries", "CharacterCreation_Tribe_BoneGnawers",
-        "CharacterCreation_Tribe_GlassWalkers", "CharacterCreation_Tribe_ShadowLords",
-        "CharacterCreation_Tribe_SilverFangs"
-    };
-    private static readonly Dictionary<string, string> TribeLabelLines = new(StringComparer.Ordinal)
-    {
-        ["Чёрные Фурии"] = "Чёрные\nФурии",
-        ["Костегрызы"] = "Костегрызы",
-        ["Стеклоходы"] = "Стеклоходы",
-        ["Повелители Теней"] = "Повелители\nТеней",
-        ["Серебряные Клыки"] = "Серебряные\nКлыки"
-    };
     private static readonly ConditionalWeakTable<TMP_Text, CreationLabelState> CreationLabelStates = new();
 
     private sealed class CreationLabelState
@@ -80,21 +67,16 @@ public sealed partial class Plugin
             }
     }
 
-    private static bool FitTribeLabels(Component widget)
+    private static bool FitCreationLabels(Component widget)
     {
-        if (!fontsReady || CreationIconsField?.GetValue(widget) is not string[] icons || icons.Length != TribeIcons.Length) return false;
-        for (int index = 0; index < icons.Length; index++)
-            if (icons[index] != TribeIcons[index]) return false;
+        if (!fontsReady || CreationIconsField?.GetValue(widget) is not string[] icons) return false;
         List<TMP_Text> labels = CreationButtonLabels(widget);
         if (labels.Count < icons.Length) return false;
         // Validate the entire group before altering anything. Never edit the
         // widget's arrays, GameObject names, listeners or selected result.
-        var lines = new string[icons.Length];
-        for (int index = 0; index < lines.Length; index++)
-        {
-            string plain = labels[index].text.Replace('\n', ' ');
-            if (!TribeLabelLines.TryGetValue(plain, out lines[index])) return false;
-        }
+        var current = new string[icons.Length];
+        for (int index = 0; index < current.Length; index++) current[index] = labels[index].text;
+        if (!CreationLabelPolicy.TryGetLines(icons, current, out string[] lines, out string group)) return false;
         float commonSize = float.MaxValue;
         for (int index = 0; index < lines.Length; index++)
         {
@@ -125,28 +107,28 @@ public sealed partial class Plugin
             if (width <= 0 || height <= 0) { RestoreCreationLabels(widget); return false; }
             float factor = Math.Min(1f, Math.Min(width / Math.Max(1, preferred.x), height / Math.Max(1, preferred.y)));
             commonSize = Math.Min(commonSize, state.Size * factor);
-            log?.LogInfo($"Tribe label metrics: index={index}; baseSize={state.Size:F1}; preferred={preferred.x:F1}x{preferred.y:F1}; originalHeight={originalHeight:F1}; freeHeight={freeHeight:F1}; room={width:F1}x{height:F1}; factor={factor:F3}.");
+            log?.LogInfo($"{group} label metrics: index={index}; baseSize={state.Size:F1}; preferred={preferred.x:F1}x{preferred.y:F1}; originalHeight={originalHeight:F1}; freeHeight={freeHeight:F1}; room={width:F1}x{height:F1}; factor={factor:F3}.");
         }
         // Same base size for every name, with a small rounding safety margin.
         // Wrapping is disabled: only the explicit breaks between words remain.
         commonSize = (float)Math.Floor(commonSize * 0.98f * 10) / 10;
         for (int index = 0; index < lines.Length; index++) labels[index].fontSize = commonSize;
-        log?.LogInfo($"Tribe label layout: labels={lines.Length}; uniformSize={commonSize:F1}; explicitWordBreaks=true; characterWrapping=false.");
+        log?.LogInfo($"{group} label layout: labels={lines.Length}; uniformSize={commonSize:F1}; explicitWordBreaks=true; characterWrapping=false.");
         return true;
     }
 
-    private static IEnumerator FitTribeLabelsAfterLayout(Component widget)
+    private static IEnumerator FitCreationLabelsAfterLayout(Component widget)
     {
         yield return null;
         // The panel's layout may not yet have its final width in InitButtons.
-        if (widget != null && widget.gameObject.activeInHierarchy) FitTribeLabels(widget);
+        if (widget != null && widget.gameObject.activeInHierarchy) FitCreationLabels(widget);
     }
 
-    private static void RefreshTribeLabels()
+    private static void RefreshCreationLabels()
     {
         if (CreationWidgetType == null) return;
         foreach (UnityEngine.Object item in Resources.FindObjectsOfTypeAll(CreationWidgetType))
-            if (item is Component widget && widget.gameObject.activeInHierarchy) FitTribeLabels(widget);
+            if (item is Component widget && widget.gameObject.activeInHierarchy) FitCreationLabels(widget);
     }
 
     [HarmonyPatch]
@@ -158,8 +140,8 @@ public sealed partial class Plugin
         private static void Prefix(Component __instance) => RestoreCreationLabels(__instance);
         private static void Postfix(Component __instance)
         {
-            FitTribeLabels(__instance);
-            if (__instance is MonoBehaviour widget) widget.StartCoroutine(FitTribeLabelsAfterLayout(__instance));
+            FitCreationLabels(__instance);
+            if (__instance is MonoBehaviour widget) widget.StartCoroutine(FitCreationLabelsAfterLayout(__instance));
         }
     }
 }

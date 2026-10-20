@@ -21,9 +21,6 @@ public sealed partial class Plugin
     private static readonly HashSet<string> HudTranslatedLabels = new(StringComparer.Ordinal)
         { "Ярость", "Сила воли", "Харано", "Здоровье" };
     private static readonly HashSet<string> ReportedUiFits = new();
-    private static readonly HashSet<string> SingleLineUiValues = new(StringComparer.Ordinal)
-        { "Без засечек (сюжет)", "Без засечек (везде)",
-          "OpenDyslexic (сюжет)", "OpenDyslexic (везде)" };
 
     private sealed class UiNativeWidth
     {
@@ -86,7 +83,7 @@ public sealed partial class Plugin
             text.text = translated;
             LocalizedUiTexts.GetValue(text, _ => new object());
         }
-        else if (uiLocalizer != null && uiLocalizer.IsLocalizedValue(text.text))
+        else if ((uiLocalizer != null && uiLocalizer.IsLocalizedValue(text.text)) || CompactLabelPolicy.IsCaption(text.text))
             LocalizedUiTexts.GetValue(text, _ => new object());
     }
 
@@ -94,16 +91,18 @@ public sealed partial class Plugin
 
     private static void FitSingleWordUiLabel(TMP_Text text)
     {
-        // Narrow label-only rule: do not resize narrative paragraphs, rich-text
-        // descriptions or arbitrary multi-word prompts. Explicit font-selector
-        // values and the four HUD headings also occupy fixed one-line slots.
+        // Exact reviewed captions plus known one-word UI values; never resize
+        // arbitrary narrative paragraphs or infer a label from length alone.
         // A different Russian font can make
         // CONTINUE -> Продолжить wider than the native condensed label's rect.
         string value = text.text;
         bool hud = HudTranslatedLabels.Contains(value) && UiNativeWidths.TryGetValue(text, out _);
-        bool eligible = uiLocalizer != null && uiLocalizer.IsLocalizedValue(value) &&
-            ContainsCyrillic(value) && value.Length <= 40 &&
-            (hud || SingleLineUiValues.Contains(value) || value.IndexOfAny(new[] { ' ', '\t', '\r', '\n', '<' }) < 0);
+        // Creation buttons have their own group-wide two-line fit. Do not let
+        // a one-line name fit compete with that policy on pooled patron buttons.
+        bool displayName = uiLocalizer != null && uiLocalizer.IsDisplayName(value) &&
+            (CreationWidgetType == null || text.GetComponentInParent(CreationWidgetType) == null);
+        bool eligible = ContainsCyrillic(value) && CompactLabelPolicy.ShouldFit(value,
+            uiLocalizer != null && uiLocalizer.IsLocalizedValue(value), hud, displayName);
         if (!eligible)
         {
             if (UiLabelLayouts.TryGetValue(text, out UiLabelLayout previous))

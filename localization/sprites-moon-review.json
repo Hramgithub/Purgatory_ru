@@ -1,0 +1,46 @@
+{
+  "format": 1,
+  "date": "2026-10-21",
+  "status": "source_and_offline_tests_passed_not_installed_or_live_verified",
+  "candidate_plugin_sha256": "38b3aa148118ae1334f0e3d2057a43122092bbd0bf9d6b410d576dda2ddf2332",
+  "story_sha256": "28f901eca9dfca5f0c57a45c15aba31bcf3a1d638c62a91ab2d20b642b08a32a",
+  "ui_dictionary_sha256": "e01bc4ba656fa62edd747f192a385edd76318ab6cf1366ee44989389156bbff2",
+  "sprite_fix": {
+    "cause": "TMP MaterialReference and TMP_SubMeshUI may carry both the current font and a sprite asset. The previous font-only submesh check could replace the sprite material with the Cyrillic font material.",
+    "change": "Skip every spriteAsset submesh before applying any font-atlas repair. Preserve native sprite material, UVs, tint and masking instances.",
+    "canonical_story_sprite_names": ["health", "willpower", "blank", "rage", "harano", "circle", "circle-filled"],
+    "unity_probe_added": true,
+    "unity_probe_executed_for_this_candidate": false,
+    "probe_scope": "Hidden disabled Canvas; seven native sprite tags with Russian bold/italic text; exercise the old failure predicate; preserve compatible material clones and sprite-sheet texture; require coherent glyph atlases. Deferred if native story sprite sheet has not loaded."
+  },
+  "phase_source": "Eight exact StringStat values in PlayerState.InitStats, inspected in the installed managed assembly.",
+  "phase_display_map": {
+    "new moon": "Новолуние",
+    "waxing crescent": "Растущий серп",
+    "first quarter": "Первая четверть",
+    "waxing gibbous": "Растущая выпуклая Луна",
+    "full moon": "Полнолуние",
+    "waning gibbous": "Убывающая выпуклая Луна",
+    "last quarter": "Последняя четверть",
+    "waning crescent": "Убывающий серп"
+  },
+  "tests": {
+    "python_cases": 89,
+    "console_csharp_cases": 267,
+    "moon_display_cases": 56,
+    "isolated_ink_phase_evaluations": 8,
+    "isolated_ink_native_stat_sprite_tooltips": 4,
+    "release_build_errors": 0,
+    "release_build_warnings": 0,
+    "private_paths_or_symbols_in_dll": false
+  },
+  "client_restarted": false,
+  "installed_dll_changed": false,
+  "story_or_internal_moonphase_values_changed": false,
+  "limitations": [
+    "Console and source-contract tests do not execute Unity graphics.",
+    "The hidden sprite regression probe and visible tooltip inspection still require an authorized future launch with this candidate.",
+    "This candidate also contains the previously prepared broad label-layout fix; that expansion remains uninstalled and not live verified.",
+    "Published v0.1.6 assets and their historical QA receipts remain unchanged."
+  ]
+}

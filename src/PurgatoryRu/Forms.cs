@@ -68,11 +68,15 @@ public sealed partial class Plugin
         return true;
     }
 
-    private static void RepairFormSubMeshes(TMP_Text text)
+    private static void RepairFormSubMeshes(TMP_Text text, bool diagnosticProbe = false)
     {
-        if (!IsFormDescription(text) && !IsLocalizedUi(text)) return;
+        if (!diagnosticProbe && !IsFormDescription(text) && !IsLocalizedUi(text)) return;
         foreach (TMP_SubMeshUI mesh in text.GetComponentsInChildren<TMP_SubMeshUI>(true))
         {
+            // TMP MaterialReference stores the current font EVEN for sprites.
+            // fontAsset being Russian does not mean that this is a glyph mesh.
+            // A sprite's UVs must keep the sprite-sheet material, never the font atlas.
+            if (mesh.spriteAsset != null) continue;
             TMP_FontAsset font = mesh.fontAsset;
             if (IsRussianFont(font) && !MaterialMatchesFont(mesh.sharedMaterial, font, true))
                 mesh.sharedMaterial = font.material;

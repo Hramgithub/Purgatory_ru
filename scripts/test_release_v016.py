@@ -35,8 +35,8 @@ class ReleaseV016Contracts(unittest.TestCase):
     def test_version_and_new_fresh_render_gate_are_required(self):
         plugin=(ROOT/'src/PurgatoryRu/Plugin.cs').read_text(encoding='utf-8-sig')
         package=(ROOT/'scripts/build_package.ps1').read_text(encoding='utf-8-sig')
-        self.assertIn('PluginVersion = "0.1.6"',plugin)
-        self.assertIn("[string]$Version = '0.1.6'",package)
+        self.assertIn('PluginVersion = "0.1.7"',plugin)
+        self.assertIn("[string]$Version = '0.1.7'",package)
         self.assertIn('localization\\form-render-v016-review.json',package)
         self.assertIn('$renderQa.dll_sha256 -ne',package)
         self.assertIn('$renderQa.story_sha256 -ne',package)

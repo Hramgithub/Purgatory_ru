@@ -1,0 +1,118 @@
+{
+  "format": 1,
+  "version": "0.1.7",
+  "date": "2026-10-21",
+  "validation": "offline_beta_live_unverified",
+  "current_dll_live_qa_passed": false,
+  "current_sprite_unity_probe_executed": false,
+  "client_restarted": false,
+  "installed_dll_changed": false,
+  "plugin_sha256": "9303b7216c15db54c3c399ab1d635fae0276ecc5da9aaa1449db4ed56b5f27f5",
+  "story_sha256": "28f901eca9dfca5f0c57a45c15aba31bcf3a1d638c62a91ab2d20b642b08a32a",
+  "baseline_dll_sha256": "029a20df2a8d8364e05ee1ce24442cc5ae14dd503ae06e46ed2ea51af81e6bec",
+  "story_and_display_dictionaries_unchanged_from_v016": true,
+  "tests": {
+    "python_cases": 92,
+    "csharp_cases": 267,
+    "ink_phase_cases": 8,
+    "ink_stat_tooltip_cases": 4,
+    "build_exit_code": 0,
+    "dll_privacy_passed": true
+  },
+  "artifacts": {
+    "src/PurgatoryRu/CompactLabelPolicy.cs": {
+      "sha256": "8ff0f7e50252884e70920eef34179a406870e380bdad08163775cc1cab23a05e",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/CreationLabelPolicy.cs": {
+      "sha256": "1441a44be233d4b4ae36cf8615c703d9a6c1bc762c3be022b82bc2caf7cdd146",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/CreationLabels.cs": {
+      "sha256": "3eb2d991c39a7cb196be70cb6cbdec685c017ce183e9c40d89e376fb59ef1ce2",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/DisplayNames.cs": {
+      "sha256": "84f1ff20584094837f40453d781756c81a1f548e2bfba978b650937f1a27e51e",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/Fonts.cs": {
+      "sha256": "3146a48c7ec3bce2fe95e8934c22e85bddf0febbe3cee983635085729dd11619",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/Forms.cs": {
+      "sha256": "736f41dd7d1c1e8744debe7b313b394d69e26054eac158d0e49f8cce150fc8aa",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/InlineSprites.cs": {
+      "sha256": "885dcf330788afcfae372a44ed0653ecf6e79e51fe334155e7add44d259df5f2",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/MoonPhaseLocalizer.cs": {
+      "sha256": "7925f073b6335dfca29f9275dd1c0fe706c0d72be45bd84dcf15d2d5c4225f18",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/Plugin.cs": {
+      "sha256": "e7d670a296470c8d8e3836c0dbf717484b7a624c84272ecb6a0bede8ecfb6fb4",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/UiText.cs": {
+      "sha256": "b0ff56becf1d7faefea6c287e192b745a31d691e63d01dbc7ee4242014eb5066",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/UiTextLocalizer.cs": {
+      "sha256": "23149d6a39d8b5dccf7f93722b9c189b358d71620189891982776dcaa74d7741",
+      "mode": "utf8-lf"
+    },
+    "src/PurgatoryRu/PurgatoryRu.csproj": {
+      "sha256": "4afd0d4a02a09fb51f94953b8c00efc79f13697f70932cbf4a0e10ac556d2905",
+      "mode": "utf8-lf"
+    },
+    "localization/name-localization.json": {
+      "sha256": "75f1b6deb14fef2a9d13817e52bfb1b390384f696715d0d180802503c5ff3146",
+      "mode": "bytes"
+    },
+    "localization/ui-strings.json": {
+      "sha256": "e01bc4ba656fa62edd747f192a385edd76318ab6cf1366ee44989389156bbff2",
+      "mode": "bytes"
+    },
+    "localization/form-render-v016-review.json": {
+      "sha256": "4d18a9a84b8b859a1a06ee246d598a3c6c8249f8e5a3effc323790204ba5f9dd",
+      "mode": "bytes"
+    },
+    "localization/ui-coverage-review.json": {
+      "sha256": "5f1ac6782495348b9564a271ae1574c2a129b1f170c94888e2aa08f48295dc90",
+      "mode": "bytes"
+    },
+    "localization/label-layout-review.json": {
+      "sha256": "ca83b1d6e272a4a7703436c1538a36e28641d6a0855b86d15fca9e523a2b45e5",
+      "mode": "bytes"
+    },
+    "localization/sprites-moon-review.json": {
+      "sha256": "5da158c659d6d22dd0cb7ec8894e9f1c0b852a94f3a422d57ba5acf25753ec93",
+      "mode": "bytes"
+    },
+    "dist/moon-tooltips-report.json": {
+      "sha256": "7150f690b23d841154e7979ca0acac1d1dd71f1ad38852f3dbbecebada82146e",
+      "mode": "bytes"
+    },
+    "scripts/prepare_release_v017_review.py": {
+      "sha256": "290c083fed42140088941f0a85072c71ba077c5a70cb4e67d1b0b8f836ce2ab4",
+      "mode": "utf8-lf"
+    },
+    "scripts/verify_release_v017.py": {
+      "sha256": "68070244d23774770c9d727ceaccf00aa6768aac751d4beebf49f0abc7be6d51",
+      "mode": "utf8-lf"
+    },
+    "scripts/Test-InkMoonPhases.ps1": {
+      "sha256": "70264d553ca3a09491e7321d491a8ae984555c7ac30b536b5406386225906d7d",
+      "mode": "utf8-lf"
+    }
+  },
+  "limitations": [
+    "Current DLL is offline-tested only; hidden Unity sprite probe and visible UI inspection have not run.",
+    "v0.1.6 live receipts are unchanged historical baselines, not current v0.1.7 live evidence.",
+    "Skills and Gifts remain in English; story and name-slot review is inherited unchanged from v0.1.6.",
+    "Not a claim about every story branch, resolution or accessible-font mode."
+  ]
+}

@@ -9,7 +9,12 @@ chapter and time-cost templates. It covers serialized text and `SetText` calls
 that bypass `set_text`, without renaming objects or changing Ink variables,
 save data or choice handlers. Skills, Gifts and retained foreign phrases are
 not dictionary keys. Cyrillic uses the existing full font-family and guarded
-canvas-atlas repair; tribe labels have an independently scoped layout patch.
+canvas-atlas repair. All eight inspected creation groups use a layout patch
+gated by exact icon and label order. CreationLabelPolicy is shared with console
+regression tests; only explicit whole-word breaks are allowed. CompactLabelPolicy
+covers reviewed short captions and anchored date/time/chapter templates, not
+arbitrary paragraphs. Display-name wrappers must pass the balanced-name parser.
+The expanded label candidate has not been live verified or published; see QA_REPORT.md.
 
 Pure UI text regression tests (developer .NET 10 SDK, not a player dependency):
 

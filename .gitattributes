@@ -5,3 +5,5 @@ localization/form-render-review.json -text
 localization/ui-*.json -text
 localization/form-render-*.json -text
 localization/release-*-review.json -text
+localization/label-layout-review.json -text
+localization/sprites-moon-review.json -text

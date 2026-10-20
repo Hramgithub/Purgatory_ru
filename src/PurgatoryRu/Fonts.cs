@@ -114,7 +114,8 @@ public sealed partial class Plugin
                 yield break;
             }
             foreach (TMP_Text text in Resources.FindObjectsOfTypeAll<TMP_Text>()) ApplyConsistentFont(text);
-            RefreshTribeLabels();
+            RefreshCreationLabels();
+            StartCoroutine(ValidateInlineSpritesWhenAvailable());
             Logger.LogInfo("Installed coherent Cyrillic font family: Regular, Italic, Bold, Bold Italic; full Russian/Latin coverage.");
             yield break;
         }

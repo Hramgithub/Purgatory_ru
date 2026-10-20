@@ -8,5 +8,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../src/PurgatoryRu/UiTextLocalizer.cs" Link="UiTextLocalizer.cs" />
+    <Compile Include="../../src/PurgatoryRu/CreationLabelPolicy.cs" Link="CreationLabelPolicy.cs" />
+    <Compile Include="../../src/PurgatoryRu/CompactLabelPolicy.cs" Link="CompactLabelPolicy.cs" />
+    <Compile Include="../../src/PurgatoryRu/MoonPhaseLocalizer.cs" Link="MoonPhaseLocalizer.cs" />
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ internal sealed class UiTextLocalizer
     private readonly IDictionary<string, string> strings;
     private readonly IDictionary<string, string> names;
     private readonly HashSet<string> localizedValues;
+    private readonly HashSet<string> displayNameValues;
     private static readonly Regex Wrapper = new(@"^(?<open>(?:<(?:u|b|i|s|color=[^<>]+|size=[^<>]+)>)+)(?<text>[^<>]+)(?<close>(?:</(?:u|b|i|s|color|size)>)+)$", RegexOptions.CultureInvariant);
     private static readonly Regex Date = new(@"^(?<month>Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (?<day>\d{1,2}), (?<time>Morning|Midday|Afternoon|Evening|Late night)$", RegexOptions.CultureInvariant);
     private static readonly Dictionary<string, string> Months = new(StringComparer.Ordinal)
@@ -28,6 +29,15 @@ internal sealed class UiTextLocalizer
         this.strings = strings; this.names = names;
         localizedValues = new HashSet<string>(strings.Values, StringComparer.Ordinal);
         localizedValues.UnionWith(names.Values);
+        displayNameValues = new HashSet<string>(names.Values, StringComparer.Ordinal);
+    }
+
+    internal bool IsDisplayName(string input)
+    {
+        if (displayNameValues.Contains(input)) return true;
+        Match wrapper = Wrapper.Match(input);
+        return wrapper.Success && BalancedWrapper(wrapper.Groups["open"].Value, wrapper.Groups["close"].Value) &&
+            displayNameValues.Contains(wrapper.Groups["text"].Value);
     }
 
     internal bool IsLocalizedValue(string input)
@@ -54,6 +64,7 @@ internal sealed class UiTextLocalizer
             translated = literal;
         else
         {
+            if (MoonPhaseLocalizer.TryTranslate(core, out string moonPhase)) translated = moonPhase;
             Match wrapper = Wrapper.Match(core);
             if (wrapper.Success && BalancedWrapper(wrapper.Groups["open"].Value, wrapper.Groups["close"].Value) &&
                 TryTranslate(wrapper.Groups["text"].Value, out string inner))

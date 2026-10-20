@@ -112,8 +112,12 @@ class UiCoverageContracts(unittest.TestCase):
 
     def test_single_word_ui_fit_is_narrow_reentrant_and_restorable(self):
         code = (ROOT/'src/PurgatoryRu/UiText.cs').read_text(encoding='utf-8-sig')
-        for contract in ('value.Length <= 40', 'uiLocalizer.IsLocalizedValue(value)',
-                         'value.IndexOfAny', 'MeasuringUiLabels.Add(id)',
+        policy = (ROOT/'src/PurgatoryRu/CompactLabelPolicy.cs').read_text(encoding='utf-8-sig')
+        self.assertIn('value.Length > 80', policy)
+        self.assertIn('value.IndexOfAny', policy)
+        self.assertIn('knownLocalized && value.IndexOf', policy)
+        for contract in ('CompactLabelPolicy.ShouldFit', 'uiLocalizer.IsLocalizedValue(value)',
+                         'MeasuringUiLabels.Add(id)',
                          'finally { MeasuringUiLabels.Remove(id); }',
                          'text.enableWordWrapping = false', 'state.Size * factor',
                          'previous.Restore(text); UiLabelLayouts.Remove(text)'):

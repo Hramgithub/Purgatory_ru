@@ -11,8 +11,14 @@ Ink-сценарий `wod02`. Файлы игры не патчатся и не 
 
 ## Установка
 
-Актуальная beta-версия: [v0.1.6](https://github.com/Hramgithub/Purgatory_ru/releases/tag/v0.1.6).
+Актуальная beta-версия: [v0.1.7](https://github.com/Hramgithub/Purgatory_ru/releases/tag/v0.1.7).
 В архив входят установщик, BepInEx, плагин, готовый перевод и инструкция.
+
+v0.1.7 исправляет материал встроенных значков в подсказках, переводит все
+восемь фаз Луны и расширяет защиту от переноса кусков слов в узких подписях.
+**Это beta с автономными тестами, но без новой визуальной проверки в игре.**
+Сценарий и словари v0.1.6 не изменены; новые функции находятся в плагине.
+Исторические отчёты v0.1.6 не подтверждают визуальную проверку v0.1.7.
 
 В v0.1.6 исправлены подписи племён и разрывы слов, добавлены 15 пропущенных
 подписей карты и 102 интерфейсные строки, уточнены сюжетные формулировки.
@@ -91,6 +97,11 @@ python .\scripts\renderer_commands.py <original-wod02.json> work/ui-command-loca
 .\scripts\Test-InkUiCommands.ps1 -SourcePath <original-wod02.json> -StoryPath dist/content/wod02.json -LocationsPath work/ui-command-locations.json -ReportPath dist/ui-command-report.json
 .\scripts\build_package.ps1
 ```
+
+Для явно помеченного релиза v0.1.7 без запуска клиента сначала выполните
+`python scripts/prepare_release_v017_review.py`, затем
+`./scripts/build_package.ps1 -Version 0.1.7 -OfflineBeta`.
+Без этого флага остаётся строгий гейт соответствия новой DLL живому QA.
 
 Перед упаковкой проверяются все восемь окон создания персонажа через настоящий
 Ink runtime: семь полей команды, количество вариантов и внутренние идентификаторы.

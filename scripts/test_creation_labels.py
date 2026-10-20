@@ -11,24 +11,43 @@ class CreationLabelsContracts(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.code = (ROOT/'src/PurgatoryRu/CreationLabels.cs').read_text(encoding='utf-8-sig')
+        cls.policy = (ROOT/'src/PurgatoryRu/CreationLabelPolicy.cs').read_text(encoding='utf-8-sig')
 
     def test_exact_five_tribe_icon_gate(self):
-        icons = re.findall(r'"(CharacterCreation_Tribe_\w+)"', self.code)
+        icons = re.findall(r'(CharacterCreation_Tribe_\w+)', self.policy)
         self.assertEqual(icons, ['CharacterCreation_Tribe_'+x for x in
             ('BlackFuries', 'BoneGnawers', 'GlassWalkers', 'ShadowLords', 'SilverFangs')])
-        self.assertIn('icons.Length != TribeIcons.Length', self.code)
-        self.assertIn('icons[index] != TribeIcons[index]', self.code)
-        self.assertLess(self.code.index('TribeLabelLines.TryGetValue'),
+        self.assertIn('SameIcons(icons, candidate.Icons)', self.policy)
+        self.assertIn('actual[index] != expected[index]', self.policy)
+        self.assertLess(self.code.index('CreationLabelPolicy.TryGetLines'),
                         self.code.index('CreationLabelStates.GetValue'))
 
     def test_only_whole_word_breaks_and_no_abbreviations(self):
-        labels = dict(re.findall(r'\["([^"]+)"\] = "([^"]+)"', self.code))
+        groups = re.findall(r'new Group\("([^"]+)",\s*"([^"]+)",\s*"([^"]+)"\)', self.policy)
+        labels = {x: x.replace(' ', r'\n') for name, icons, names in groups
+                  if name in ('Tribe', 'Patron') for x in names.split('|')}
         self.assertEqual(labels, {'Чёрные Фурии': r'Чёрные\nФурии',
             'Костегрызы': 'Костегрызы', 'Стеклоходы': 'Стеклоходы',
             'Повелители Теней': r'Повелители\nТеней',
-            'Серебряные Клыки': r'Серебряные\nКлыки'})
+            'Серебряные Клыки': r'Серебряные\nКлыки',
+            'Зловещая выдра': r'Зловещая\nвыдра',
+            'Мистическая рысь': r'Мистическая\nрысь',
+            'Бессмертный павлин': r'Бессмертный\nпавлин'})
         for label, lines in labels.items():
             self.assertEqual(lines.replace(r'\n', ' '), label)
+
+    def test_all_eight_story_groups_have_exact_ordered_policies(self):
+        groups = re.findall(r'new Group\("([^"]+)",\s*"([^"]+)",\s*"([^"]+)"\)', self.policy)
+        self.assertEqual(len(groups), 8)
+        self.assertEqual(sum(len(names.split('|')) for _, _, names in groups), 27)
+        self.assertIn('plain != matched.Labels[index]', self.policy)
+        report = ROOT/'dist/ui-command-report.json'
+        if not report.exists():
+            self.skipTest('Requires local canonical Ink UI runtime report')
+        signatures = {icons: names.split('|') for _, icons, names in groups}
+        for command in json.loads(report.read_text(encoding='utf-8-sig'))['commands']:
+            fields = command['fields']
+            self.assertEqual(signatures[fields[2]], [x.strip('«»') for x in fields[3].split('|')])
 
     def test_one_size_fits_both_dimensions_with_native_metrics(self):
         for expected in ('text.enableAutoSizing = false', 'text.enableWordWrapping = false',
@@ -63,7 +82,7 @@ class CreationLabelsContracts(unittest.TestCase):
                       (ROOT/'src/PurgatoryRu/Plugin.cs').read_text(encoding='utf-8-sig'))
 
     def test_initial_fonts_and_deferred_panel_layout_are_covered(self):
-        self.assertIn('RefreshTribeLabels();',
+        self.assertIn('RefreshCreationLabels();',
                       (ROOT/'src/PurgatoryRu/Fonts.cs').read_text(encoding='utf-8-sig'))
         self.assertIn('yield return null;', self.code)
         self.assertIn('widget.gameObject.activeInHierarchy', self.code)

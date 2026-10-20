@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
-    [string]$Version = '0.1.6'
+    [string]$Version = '0.1.7',
+    [switch]$OfflineBeta
 )
 
 $ErrorActionPreference = 'Stop'
@@ -44,16 +45,22 @@ if (!(Test-Path -LiteralPath $Python)) { $Python = 'python' }
 if ($LASTEXITCODE -ne 0) { throw 'Release DLL contains private paths or symbols.' }
 $storyHash = (Get-FileHash -LiteralPath $Story -Algorithm SHA256).Hash
 $uiCoverageQa = Get-Content -Raw -Encoding UTF8 -LiteralPath $UiCoverageReview | ConvertFrom-Json
-if ($uiCoverageQa.live_review.passed -ne $true -or
+if ($OfflineBeta) {
+    if ($Version -cne '0.1.7') { throw 'Offline beta approval is limited to v0.1.7.' }
+    & $Python (Join-Path $Root 'scripts\verify_release_v017.py')
+    if ($LASTEXITCODE -ne 0) { throw 'Explicit offline beta receipt verification failed.' }
+    Write-Warning 'v0.1.7 OFFLINE BETA: current DLL has no live Unity QA. Historical v0.1.6 receipts are baselines only.'
+}
+if (!$OfflineBeta -and ($uiCoverageQa.live_review.passed -ne $true -or
     $uiCoverageQa.story_sha256 -ne $storyHash -or
     $uiCoverageQa.plugin_sha256 -ne (Get-FileHash -LiteralPath $PluginDll -Algorithm SHA256).Hash -or
-    $uiCoverageQa.ui_dictionary_sha256 -ne (Get-FileHash -LiteralPath $UiStrings -Algorithm SHA256).Hash) {
+    $uiCoverageQa.ui_dictionary_sha256 -ne (Get-FileHash -LiteralPath $UiStrings -Algorithm SHA256).Hash)) {
     throw 'Repeat limited live UI QA for the current story, DLL and UI dictionary before packaging.'
 }
 $renderQa = Get-Content -Raw -Encoding UTF8 -LiteralPath $FormRenderReview | ConvertFrom-Json
-if ($renderQa.passed -ne $true -or $renderQa.story_sha256 -ne $storyHash -or
+if (!$OfflineBeta -and ($renderQa.passed -ne $true -or $renderQa.story_sha256 -ne $storyHash -or
     $renderQa.dll_sha256 -ne (Get-FileHash -LiteralPath $PluginDll -Algorithm SHA256).Hash -or
-    @($renderQa.cases).Count -ne 4 -or @($renderQa.cases | Where-Object { $_.passed -ne $true }).Count -ne 0) {
+    @($renderQa.cases).Count -ne 4 -or @($renderQa.cases | Where-Object { $_.passed -ne $true }).Count -ne 0)) {
     throw 'Live form-render QA must match the current DLL and story before packaging.'
 }
 foreach ($reportPath in @($SummaryReport, $RenownReport)) {
@@ -162,7 +169,8 @@ Copy-Item -LiteralPath (Join-Path $Root 'COMPATIBILITY.md') -Destination $Stage 
 Copy-Item -LiteralPath (Join-Path $Root 'GLOSSARY.md') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'QA_REPORT.md') -Destination $Stage -Force
 Copy-Item -LiteralPath $UiReport -Destination (Join-Path $Stage 'UI-COMMAND-QA.json') -Force
-Copy-Item -LiteralPath $UiCoverageReview -Destination (Join-Path $Stage 'UI-COVERAGE-QA.json') -Force
+$uiReceiptName = if ($OfflineBeta) { 'UI-COVERAGE-BASELINE-v016.json' } else { 'UI-COVERAGE-QA.json' }
+Copy-Item -LiteralPath $UiCoverageReview -Destination (Join-Path $Stage $uiReceiptName) -Force
 Copy-Item -LiteralPath $SummaryReport -Destination (Join-Path $Stage 'CHAPTER-SUMMARY-QA.json') -Force
 Copy-Item -LiteralPath $RenownReport -Destination (Join-Path $Stage 'RENOWN-QA.json') -Force
 Copy-Item -LiteralPath $EditorialReport -Destination (Join-Path $Stage 'EDITORIAL-REVIEW.json') -Force
@@ -171,7 +179,14 @@ Copy-Item -LiteralPath $NameFragments -Destination (Join-Path $Stage 'NAME-FRAGM
 Copy-Item -LiteralPath $NameAudit -Destination (Join-Path $Stage 'NAME-REVIEW-AUDIT.json') -Force
 Copy-Item -LiteralPath $NameAuditBaseline -Destination (Join-Path $Stage 'NAME-REVIEW-BASELINE-v015.json') -Force
 Copy-Item -LiteralPath $ReleaseDeltaReview -Destination (Join-Path $Stage 'RELEASE-DELTA-QA.json') -Force
-Copy-Item -LiteralPath $FormRenderReview -Destination (Join-Path $Stage 'FORM-RENDER-QA.json') -Force
+$formReceiptName = if ($OfflineBeta) { 'FORM-RENDER-BASELINE-v016.json' } else { 'FORM-RENDER-QA.json' }
+Copy-Item -LiteralPath $FormRenderReview -Destination (Join-Path $Stage $formReceiptName) -Force
+if ($OfflineBeta) {
+    Copy-Item -LiteralPath (Join-Path $Root 'localization/release-v017-review.json') -Destination (Join-Path $Stage 'RELEASE-QA.json')
+    Copy-Item -LiteralPath (Join-Path $Root 'localization/label-layout-review.json') -Destination (Join-Path $Stage 'LABEL-LAYOUT-QA.json')
+    Copy-Item -LiteralPath (Join-Path $Root 'localization/sprites-moon-review.json') -Destination (Join-Path $Stage 'SPRITES-MOON-QA.json')
+    Copy-Item -LiteralPath (Join-Path $Root 'dist/moon-tooltips-report.json') -Destination (Join-Path $Stage 'MOON-TOOLTIPS-QA.json')
+}
 Copy-Item -LiteralPath $RetainedTerms -Destination (Join-Path $Stage 'RETAINED-TERMS.json') -Force
 Copy-Item -LiteralPath $NameContinuationsReport -Destination (Join-Path $Stage 'NAME-CONTINUATIONS-QA.json') -Force
 Copy-Item -LiteralPath $NameReport -Destination (Join-Path $Stage 'NAME-QA.json') -Force
@@ -194,6 +209,7 @@ $files = Get-ChildItem -LiteralPath $Stage -Recurse -File | ForEach-Object {
 $manifest = [ordered]@{
     package = 'Purgatory Russian Localization'
     version = $Version
+    validation = if ($OfflineBeta) { 'offline_beta_live_unverified' } else { 'limited_live_qa_passed' }
     createdAt = (Get-Date).ToUniversalTime().ToString('o')
     files = @($files)
 }

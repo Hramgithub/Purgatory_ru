@@ -15,4 +15,6 @@ build/
 dist/
 src/**/bin/
 src/**/obj/
+tests/**/bin/
+tests/**/obj/
 BepInEx/LogOutput.log

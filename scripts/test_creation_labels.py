@@ -80,6 +80,33 @@ class CreationLabelsContracts(unittest.TestCase):
         self.assertIn('⟦T002⟧дух бетона⟦T003⟧', rows[1294])
         self.assertEqual(rows[915], 'Но меня мучил голод.')
 
+    def test_tribe_motivation_choice_and_all_five_continuations(self):
+        rows = {}
+        for path in (ROOT/'localization/ru').glob('chunk-*.json'):
+            rows.update({x['id']:x['translation'] for x in json.loads(path.read_bytes())['items']})
+        self.assertEqual(rows[1298], 'Одна черта этого племени особенно привлекала меня.')
+        for item_id, tribe in ((1299, 'Стеклоходов'), (1305, 'Серебряных Клыков'),
+            (1310, 'Костегрызов'), (1317, 'Повелителей Теней'), (1322, 'Чёрных Фурий')):
+            self.assertEqual(rows[item_id], f' Я выбрала {tribe} по одной причине.')
+
+    def test_column_prose_and_polish_quote_preserve_markup_and_original(self):
+        from collections import Counter
+        rows = {x['id']:x['translation'] for x in
+            json.loads((ROOT/'localization/ru/chunk-0007.json').read_bytes())['items']}
+        self.assertIn('На выступавшей над землёй', rows[1340])
+        self.assertEqual(Counter(re.findall(r'⟦T\d+⟧', rows[1340])),
+                         Counter(f'⟦T{i:03d}⟧' for i in range(8)))
+        self.assertEqual(rows[1341],
+            '⟦T000⟧Day, ut ia pobrusa, a ti poziwai⟦T001⟧: «Давай я поработаю, а ты отдохни».')
+        self.assertEqual(rows[1345], 'Мы были товарищами.')
+
+    def test_garou_name_description_does_not_rewrite_author_name_meanings(self):
+        rows = {x['id']:x['translation'] for x in
+            json.loads((ROOT/'localization/ru/chunk-0007.json').read_bytes())['items']}
+        self.assertIn('Она звала меня ⟦T001⟧именем Гару⟦T002⟧', rows[1349])
+        self.assertEqual(rows[1350], 'Zohal — «луна далёкой планеты».')
+        self.assertIn('воображала своё родство с', rows[1355])
+
 
 if __name__ == '__main__':
     unittest.main()

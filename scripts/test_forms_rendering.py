@@ -29,7 +29,8 @@ class FormsRenderingContracts(unittest.TestCase):
 
     def test_material_policy_checks_atlas_shader_and_sdf_metrics(self):
         for required in (
-            'material.shader != font.material.shader',
+            'material.shader == font.material.shader', 'if (!shaderMatches) return false',
+            'bool allowSoftMaskShader = false',
             'material.GetTexture("_MainTex")',
             'font.atlasTexture',
             '"_GradientScale"', '"_TextureWidth"', '"_TextureHeight"',
@@ -49,7 +50,7 @@ class FormsRenderingContracts(unittest.TestCase):
         self.assertIn("FormWindow(text) != null", self.forms)
         self.assertIn('AccessTools.TypeByName("ChangeForm")', self.forms)
         self.assertIn('AccessTools.Field(FormWindowType, "infoDump")', self.forms)
-        self.assertNotRegex(self.forms, r"\bname\s*=")
+        self.assertNotRegex(self.forms, r"\bname\s*=(?!=)")
         for prohibited in ("ChoosePathString(", "EvaluateFunction(", "Select(", "Application.Quit("):
             self.assertNotIn(prohibited, self.forms)
 
@@ -66,12 +67,13 @@ class FormsRenderingContracts(unittest.TestCase):
             self.assertIn(required, self.forms)
         self.assertIn("<b><i>", self.forms)
 
-    def test_final_canvas_binding_is_scoped_to_russian_form_description(self):
+    def test_final_canvas_binding_is_scoped_to_russian_forms_or_registered_ui(self):
         binding = self.forms.split('private static void BindFormCanvasAtlas(', 1)[1].split('\n    [HarmonyPatch', 1)[0]
         for required in ('!fontsReady', 'text == null', '!IsRussianFont(text.font)',
                          '!ContainsCyrillic(text.text)', '!IsFormDescription(text)',
                          '!MaterialMatchesFont(shared, text.font)',
-                         '!MaterialMatchesFont(rendered, text.font)'):
+                         '!MaterialMatchesFont(rendered, text.font, allowSoftMaskShader: uiMask)',
+                         '!IsLocalizedUi(text)'):
             self.assertIn(required, binding)
         # Bind only native draw state: never advance story, regenerate meshes,
         # change the font or recursively ask TMP to update the material.

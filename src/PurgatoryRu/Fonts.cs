@@ -187,6 +187,7 @@ public sealed partial class Plugin
     private static void ApplyConsistentFont(TMP_Text text)
     {
         if (!fontsReady || russianRegular == null || text == null || text.font == null) return;
+        LocalizeVisibleUiText(text);
         LocalizeFormLabel(text);
         if (ContainsCyrillic(text.text))
         {
@@ -222,6 +223,7 @@ public sealed partial class Plugin
             text.font = binding.OriginalFont;
             text.fontSharedMaterial = binding.OriginalMaterial;
         }
+        FitSingleWordUiLabel(text);
     }
 
     private static void AuditFontRun(TMP_TextInfo info)

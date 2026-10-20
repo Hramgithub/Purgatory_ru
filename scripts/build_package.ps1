@@ -13,6 +13,8 @@ $SummaryReport = Join-Path $Root 'dist\chapter-summary-report.json'
 $RenownReport = Join-Path $Root 'dist\renown-report.json'
 $EditorialReport = Join-Path $Root 'localization\editorial-review.json'
 $NamePolicy = Join-Path $Root 'localization\name-localization.json'
+$UiStrings = Join-Path $Root 'localization\ui-strings.json'
+$UiCoverageReview = Join-Path $Root 'localization\ui-coverage-review.json'
 $NameForms = Join-Path $Root 'localization\name-forms.json'
 $NameFragments = Join-Path $Root 'localization\name-fragments.json'
 $NameAudit = Join-Path $Root 'localization\name-review-audit.json'
@@ -30,7 +32,7 @@ $Archive = Join-Path $OutRoot "Purgatory-RU-$Version.zip"
 
 foreach ($required in @($SourceZip, $PluginDll, $Story, $UiReport, $SummaryReport, $RenownReport,
         $EditorialReport, $NamePolicy, $NameForms, $NameFragments, $NameAudit, $NameReport, $FormsReport,
-        $NameContinuationsReport, $RetainedTerms, $FormRenderReview)) {
+        $NameContinuationsReport, $RetainedTerms, $FormRenderReview, $UiStrings, $UiCoverageReview)) {
     if (!(Test-Path -LiteralPath $required)) { throw "Required file missing: $required" }
 }
 $Python = Join-Path $Root '.venv\Scripts\python.exe'
@@ -38,6 +40,13 @@ if (!(Test-Path -LiteralPath $Python)) { $Python = 'python' }
 & $Python (Join-Path $Root 'scripts\verify_release_privacy.py') $PluginDll
 if ($LASTEXITCODE -ne 0) { throw 'Release DLL contains private paths or symbols.' }
 $storyHash = (Get-FileHash -LiteralPath $Story -Algorithm SHA256).Hash
+$uiCoverageQa = Get-Content -Raw -Encoding UTF8 -LiteralPath $UiCoverageReview | ConvertFrom-Json
+if ($uiCoverageQa.live_review.passed -ne $true -or
+    $uiCoverageQa.story_sha256 -ne $storyHash -or
+    $uiCoverageQa.plugin_sha256 -ne (Get-FileHash -LiteralPath $PluginDll -Algorithm SHA256).Hash -or
+    $uiCoverageQa.ui_dictionary_sha256 -ne (Get-FileHash -LiteralPath $UiStrings -Algorithm SHA256).Hash) {
+    throw 'Repeat limited live UI QA for the current story, DLL and UI dictionary before packaging.'
+}
 $renderQa = Get-Content -Raw -Encoding UTF8 -LiteralPath $FormRenderReview | ConvertFrom-Json
 if ($renderQa.passed -ne $true -or $renderQa.story_sha256 -ne $storyHash -or
     $renderQa.dll_sha256 -ne (Get-FileHash -LiteralPath $PluginDll -Algorithm SHA256).Hash -or
@@ -136,11 +145,13 @@ New-Item -ItemType Directory -Force -Path $PluginDir | Out-Null
 Copy-Item -LiteralPath $PluginDll -Destination (Join-Path $PluginDir 'PurgatoryRu.dll')
 Copy-Item -LiteralPath $Story -Destination (Join-Path $PluginDir 'wod02.json')
 Copy-Item -LiteralPath $NamePolicy -Destination (Join-Path $PluginDir 'name-localization.json')
+Copy-Item -LiteralPath $UiStrings -Destination (Join-Path $PluginDir 'ui-strings.json')
 Copy-Item -Path (Join-Path $Root 'installer\*') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'COMPATIBILITY.md') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'GLOSSARY.md') -Destination $Stage -Force
 Copy-Item -LiteralPath (Join-Path $Root 'QA_REPORT.md') -Destination $Stage -Force
 Copy-Item -LiteralPath $UiReport -Destination (Join-Path $Stage 'UI-COMMAND-QA.json') -Force
+Copy-Item -LiteralPath $UiCoverageReview -Destination (Join-Path $Stage 'UI-COVERAGE-QA.json') -Force
 Copy-Item -LiteralPath $SummaryReport -Destination (Join-Path $Stage 'CHAPTER-SUMMARY-QA.json') -Force
 Copy-Item -LiteralPath $RenownReport -Destination (Join-Path $Stage 'RENOWN-QA.json') -Force
 Copy-Item -LiteralPath $EditorialReport -Destination (Join-Path $Stage 'EDITORIAL-REVIEW.json') -Force

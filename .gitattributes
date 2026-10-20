@@ -2,3 +2,4 @@
 localization/name-*.json -text
 localization/retained-terms.json -text
 localization/form-render-review.json -text
+localization/ui-*.json -text

@@ -40,10 +40,19 @@ public sealed partial class Plugin
             text.text = translated;
     }
 
-    private static bool MaterialMatchesFont(Material material, TMP_FontAsset font, bool allowAdditionalAtlases = false)
+    private static bool MaterialMatchesFont(Material? material, TMP_FontAsset font, bool allowAdditionalAtlases = false,
+        bool allowSoftMaskShader = false)
     {
         if (material == null || font == null || font.material == null ||
-            material.shader != font.material.shader || !material.HasProperty("_MainTex")) return false;
+            !material.HasProperty("_MainTex")) return false;
+        // The game's Soft Mask wrapper is a legitimate final UI material.
+        // Admit only its exact wrapper for this font shader; atlas and every
+        // SDF metric below must still match. Never replace it with the unmasked
+        // base material, and retain strict shader identity everywhere else.
+        bool shaderMatches = material.shader == font.material.shader ||
+            (allowSoftMaskShader && material.shader != null && font.material.shader != null &&
+             material.shader.name == "Soft Mask/" + font.material.shader.name);
+        if (!shaderMatches) return false;
         Texture atlas = material.GetTexture("_MainTex");
         bool atlasMatches = atlas == font.atlasTexture;
         if (!atlasMatches && allowAdditionalAtlases)
@@ -61,7 +70,7 @@ public sealed partial class Plugin
 
     private static void RepairFormSubMeshes(TMP_Text text)
     {
-        if (!IsFormDescription(text)) return;
+        if (!IsFormDescription(text) && !IsLocalizedUi(text)) return;
         foreach (TMP_SubMeshUI mesh in text.GetComponentsInChildren<TMP_SubMeshUI>(true))
         {
             TMP_FontAsset font = mesh.fontAsset;
@@ -73,28 +82,30 @@ public sealed partial class Plugin
     private static void BindFormCanvasAtlas(TextMeshProUGUI text, bool diagnosticProbe = false)
     {
         if (!fontsReady || text == null || !IsRussianFont(text.font) ||
-            !ContainsCyrillic(text.text) || (!diagnosticProbe && !IsFormDescription(text))) return;
+            (!diagnosticProbe && (!text.isActiveAndEnabled || text.canvas == null)) ||
+            !ContainsCyrillic(text.text) || (!diagnosticProbe && !IsFormDescription(text) && !IsLocalizedUi(text))) return;
         Material shared = text.fontSharedMaterial;
         // In this game's TMP build, changing the font while ParseInputText is
         // already rebuilding graphics can lose SetMaterialDirty. Mesh metadata
         // then looks correct while the CanvasRenderer still draws the old atlas.
         // Use the normal stencil/masking material, not the unmasked font material.
         Material rendered = text.materialForRendering;
-        if (!MaterialMatchesFont(shared, text.font) || !MaterialMatchesFont(rendered, text.font))
+        bool uiMask = !IsFormDescription(text) && IsLocalizedUi(text);
+        if (!MaterialMatchesFont(shared, text.font) || !MaterialMatchesFont(rendered, text.font, allowSoftMaskShader: uiMask))
         {
             log?.LogError("Form canvas binding skipped: final font/material atlas is inconsistent.");
             return;
         }
         CanvasRenderer renderer = text.canvasRenderer;
         Material previous = renderer.materialCount > 0 ? renderer.GetMaterial(0) : null!;
-        bool previousMismatch = !MaterialMatchesFont(previous, text.font);
+        bool previousMismatch = !MaterialMatchesFont(previous, text.font, allowSoftMaskShader: uiMask);
         renderer.materialCount = 1;
         renderer.SetMaterial(rendered, 0);
         // Legacy EnableMasking / outline APIs can also pin a texture separately
         // from Material._MainTex. A material-only replacement does not clear it.
         renderer.SetTexture(shared.GetTexture("_MainTex"));
         if (!diagnosticProbe && AuditedFormCanvasBindings.Add(text.text.GetHashCode()))
-            log?.LogInfo($"Form final canvas binding: previousMaterialMismatch={previousMismatch}; boundMaterialMatches={MaterialMatchesFont(renderer.GetMaterial(0), text.font)}; explicitAtlasTexture=true; characters={text.textInfo.characterCount}.");
+            log?.LogInfo($"Form final canvas binding: previousMaterialMismatch={previousMismatch}; boundMaterialMatches={MaterialMatchesFont(renderer.GetMaterial(0), text.font, allowSoftMaskShader: uiMask)}; explicitAtlasTexture=true; characters={text.textInfo.characterCount}.");
     }
 
     [HarmonyPatch(typeof(TextMeshProUGUI), "OnPreRenderCanvas")]

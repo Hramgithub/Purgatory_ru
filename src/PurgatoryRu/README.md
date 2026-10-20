@@ -1,9 +1,28 @@
 # PurgatoryRu plugin
 
-The plugin patches only `Ink.Runtime.Story(string)` and replaces the main
-`wod02` story when its stable marker is present. It does not intercept arbitrary
-TextMeshPro or Unity UI setters, so unrelated interface strings and protected
-skill/Gift titles are not rewritten by a broad runtime dictionary.
+The plugin replaces `Ink.Runtime.Story(string)` only when the stable `wod02`
+marker is present. The assembled story keeps gameplay identifiers and commands.
+
+Visible names use the separate name policy. `UiTextLocalizer` also translates
+exact final TMP display values from `ui-strings.json`, plus anchored date,
+chapter and time-cost templates. It covers serialized text and `SetText` calls
+that bypass `set_text`, without renaming objects or changing Ink variables,
+save data or choice handlers. Skills, Gifts and retained foreign phrases are
+not dictionary keys. Cyrillic uses the existing full font-family and guarded
+canvas-atlas repair; tribe labels have an independently scoped layout patch.
+
+Pure UI text regression tests (developer .NET 10 SDK, not a player dependency):
+
+```powershell
+dotnet run --project tests/UiTextCoreTests/UiTextCoreTests.csproj -- localization/ui-strings.json
+```
+
+`scripts/audit_game_ui.py` uses optional UnityPy 1.25.4 and
+TypeTreeGeneratorAPI 0.0.10 for a read-only inventory of a local game install.
+Keep raw inventories in ignored `work/`: serialized technical settings may
+contain vendor credentials. `summarize_ui_audit.py` exports only whitelisted
+metadata and hashes for a public receipt. Inventory and console tests are not
+substitutes for live Unity layout checks. See `QA_REPORT.md` for tested scope.
 
 Build locally:
 

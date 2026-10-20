@@ -39,6 +39,7 @@ public sealed partial class Plugin : BaseUnityPlugin
 
         replacementStory = candidate;
         LoadDisplayNames();
+        LoadUiStrings();
         harmony = new Harmony(PluginGuid);
         harmony.PatchAll(typeof(StoryConstructorPatch));
         harmony.PatchAll(typeof(FallbackFontFacePatch));

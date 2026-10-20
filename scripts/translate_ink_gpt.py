@@ -147,6 +147,11 @@ def split_visible(source: str, pt_changed: bool, protected_exact: set[str]) -> t
     story_match = STORY_PREFIX_RE.match(body)
     if story_match:
         return "^" + story_match.group("prefix"), story_match.group("body")
+    # Map choices are visible prose after an immutable @marker. The old
+    # blanket @ exclusion missed conversation topics and search actions.
+    map_match = re.fullmatch(r'(?P<prefix>@[A-Za-z][A-Za-z0-9_-]*[ \t]+)(?P<body>[^@\s].*)', body)
+    if map_match:
+        return '^' + map_match.group('prefix'), map_match.group('body')
     if stripped.startswith(("@", '"', "CS_")):
         return None
     if not re.search(r"[A-Za-z]", body):

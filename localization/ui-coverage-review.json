@@ -1,10 +1,10 @@
 {
   "format": 1,
-  "status": "installed_limited_live_qa_passed_not_a_new_release",
+  "status": "installed_limited_live_qa_passed",
   "unity_version": "2021.3.28f1",
   "source_sha256": "91b8666e021b977f1371f713bea804e823b0fd7eaf2c5e5baf95b5c267006265",
   "story_sha256": "28f901eca9dfca5f0c57a45c15aba31bcf3a1d638c62a91ab2d20b642b08a32a",
-  "plugin_sha256": "6ee706a0fc08c5e077cda66b4d0a11fa9cc576776e363c52f5d035ad512c2fc2",
+  "plugin_sha256": "029a20df2a8d8364e05ee1ce24442cc5ae14dd503ae06e46ed2ea51af81e6bec",
   "ui_dictionary_sha256": "e01bc4ba656fa62edd747f192a385edd76318ab6cf1366ee44989389156bbff2",
   "ui_dictionary_entries": 102,
   "asset_input_files": [
@@ -817,7 +817,7 @@
     "passed": true,
     "date": "2026-10-20",
     "timezone": "Europe/Moscow",
-    "plugin_sha256": "6ee706a0fc08c5e077cda66b4d0a11fa9cc576776e363c52f5d035ad512c2fc2",
+    "plugin_sha256": "029a20df2a8d8364e05ee1ce24442cc5ae14dd503ae06e46ed2ea51af81e6bec",
     "story_sha256": "28f901eca9dfca5f0c57a45c15aba31bcf3a1d638c62a91ab2d20b642b08a32a",
     "ui_dictionary_sha256": "e01bc4ba656fa62edd747f192a385edd76318ab6cf1366ee44989389156bbff2",
     "window_pixels": [
@@ -827,16 +827,21 @@
     "launch": "Steam AppID 2463980",
     "observed": [
       "Main menu: Continue translation is one complete word; hover color retained",
-      "Settings: current labels and Quality/Disabled values translated without overlap",
+      "Settings: current labels and Quality/Disabled values translated without overlap; no setting changed",
       "Loading caption translated",
-      "Garou bar: all three conversation topics and three character names translated",
+      "Restored Garou bar save: all three conversation topics and three character names translated",
       "HUD: four headings fit before their unmodified bars; date and form displayed in Russian",
-      "Apokalipsa animated header keeps the native Soft Mask material"
+      "Apokalipsa header retains native Soft Mask rendering",
+      "Actual ChangeForm: four available complete descriptions readable, Glabro rechecked after switching; separate v016 render receipt"
     ],
     "settings_changed": false,
-    "story_choices_selected": false,
+    "story_choices_selected": true,
+    "story_choice_scope": "Only the approved temporary clearing checkpoint; no conversation selected in the restored bar save",
     "pretest_mod_and_saves_backup_created": true,
-    "final_log_sha256": "6afc3cd77776684d35065b6306acf027b5f40a3d92a64d54cef3fe8a586344b8",
+    "original_two_save_files_restored_and_hash_verified": true,
+    "restored_bar_loaded_successfully": true,
+    "final_log_sha256": "721d6a97607cb086579717a005da4e95775ad8b4f04c5a13cbb99f5bad53592b",
+    "form_test_log_sha256": "50095b4b7793d7a67e47a849e9d661a5f481ef1b53bf4607e67776a80b5d6cb1",
     "final_log_errors": 0,
     "final_log_warnings": 0,
     "font_family_self_test_cases": 8,

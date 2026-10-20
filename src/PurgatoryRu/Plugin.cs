@@ -13,7 +13,7 @@ public sealed partial class Plugin : BaseUnityPlugin
 {
     public const string PluginGuid = "ru.hramgithub.purgatory.localization";
     public const string PluginName = "Purgatory Russian Localization";
-    public const string PluginVersion = "0.1.5";
+    public const string PluginVersion = "0.1.6";
 
     private const string StoryMarker = "\"^wod02Completed\"";
     private static string? replacementStory;

@@ -93,10 +93,10 @@ def main():
                 raise ValueError('Live review is stale: '+key)
         if live['passed'] is not True:
             raise ValueError('Do not mark a failed live review as tested')
-        report['status'] = 'installed_limited_live_qa_passed_not_a_new_release'
+        report['status'] = 'installed_limited_live_qa_passed'
         report['live_review'] = live
         report['limitations'] = [line for line in report['limitations'] if not line.startswith('New menu/map glyphs')]
-    args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    args.output.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps({'candidates':len(candidates),'categories':report['candidate_categories'],
                       'dictionary':len(dictionary['strings']),'story_passed':qa['passed']}))
 

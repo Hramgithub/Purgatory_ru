@@ -1,0 +1,24 @@
+{
+  "format": 1,
+  "version": "0.1.6",
+  "date": "2026-10-20",
+  "passed": true,
+  "dll_sha256": "029a20df2a8d8364e05ee1ce24442cc5ae14dd503ae06e46ed2ea51af81e6bec",
+  "story_sha256": "28f901eca9dfca5f0c57a45c15aba31bcf3a1d638c62a91ab2d20b642b08a32a",
+  "method": "Steam launch with an approved temporary clearing checkpoint; actual ChangeForm window; pointer positioning through a one-unit wheel event without clicking form buttons; visual inspection of all four complete descriptions and renderer log; Glabro rechecked after switching.",
+  "window_pixels": [1442, 842],
+  "final_native_material_matches": true,
+  "explicit_canvas_texture_binding": true,
+  "regular_and_bold_text_readable": true,
+  "cases": [
+    {"form": "glabro", "passed": true, "characters": 73, "materials": 2, "atlas_mismatches": 0, "overflow": false, "rechecked_after_switching": true},
+    {"form": "crinos", "passed": true, "characters": 81, "materials": 2, "atlas_mismatches": 0, "overflow": false},
+    {"form": "hispo", "passed": true, "characters": 63, "materials": 2, "atlas_mismatches": 0, "overflow": false},
+    {"form": "lupus", "passed": true, "characters": 91, "materials": 2, "atlas_mismatches": 0, "overflow": false}
+  ],
+  "limitations": [
+    "The first pointer-drag attempt confirmed Glabro in the temporary test session. The checkpoint was reloaded before the four-description inspection; no transformation was confirmed during that inspection.",
+    "Homid is the current form and its button is disabled; its description was evaluated through Ink and its tutorial paragraph was visible, not selected in this window.",
+    "Only the observed Windows/Steam configuration was tested, not all resolutions or complete gameplay branches."
+  ]
+}

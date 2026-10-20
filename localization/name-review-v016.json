@@ -1,0 +1,25 @@
+{
+  "format": 1,
+  "version": "0.1.6",
+  "date": "2026-10-20",
+  "complete": true,
+  "baseline_story_sha256": "2c7afd169a941ddd43bfb661c3b211b12e53066d5a2e7b60f1a0dd8041a1f46b",
+  "source_sha256": "91b8666e021b977f1371f713bea804e823b0fd7eaf2c5e5baf95b5c267006265",
+  "story_sha256": "28f901eca9dfca5f0c57a45c15aba31bcf3a1d638c62a91ab2d20b642b08a32a",
+  "reviewed_count": 4106,
+  "reviewed_slots": 5259,
+  "method": "Inherited v0.1.5 name context audit plus exact v0.1.6 input/slot/policy delta verification and current full canonical-name QA.",
+  "baseline_review": "name-review-audit.json",
+  "baseline_review_sha256": "2ee197606b7d57fe54dc222b7fb1355ee64ac24c579de43253ff3f5ff6b54d80",
+  "delta_review": "release-v016-review.json",
+  "delta_review_sha256": "a08c558511f4b13cb8c88ef5932d762c075cf52f9421fc49ff20bfdd3d1a4e53",
+  "artifacts": {
+    "localization/name-localization.json": "75f1b6deb14fef2a9d13817e52bfb1b390384f696715d0d180802503c5ff3146",
+    "localization/name-forms.json": "39aae3daaac1c9b23daf0a3324f931de9938b5c2d13a5498a1cdea1abf121f88",
+    "localization/name-fragments.json": "510df0990d3d0d31134db4a24082f761a7db5fbb8b8b1c9b5e0d47161dd9fbd1",
+    "localization/retained-terms.json": "3d4fcd32c36c0f9686f552fb463331b2535f63c1f35e29ddcc7f678f01fd02a6"
+  },
+  "limitations": [
+    "No new full-script editorial pass or all-branches live playthrough is claimed."
+  ]
+}

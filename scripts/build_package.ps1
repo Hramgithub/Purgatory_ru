@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$Version = '0.1.5'
+    [string]$Version = '0.1.6'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -17,12 +17,14 @@ $UiStrings = Join-Path $Root 'localization\ui-strings.json'
 $UiCoverageReview = Join-Path $Root 'localization\ui-coverage-review.json'
 $NameForms = Join-Path $Root 'localization\name-forms.json'
 $NameFragments = Join-Path $Root 'localization\name-fragments.json'
-$NameAudit = Join-Path $Root 'localization\name-review-audit.json'
+$NameAudit = Join-Path $Root 'localization\name-review-v016.json'
+$NameAuditBaseline = Join-Path $Root 'localization\name-review-audit.json'
+$ReleaseDeltaReview = Join-Path $Root 'localization\release-v016-review.json'
 $NameReport = Join-Path $Root 'dist\name-qa-report.json'
 $FormsReport = Join-Path $Root 'dist\forms-report.json'
 $NameContinuationsReport = Join-Path $Root 'dist\name-continuations-report.json'
 $RetainedTerms = Join-Path $Root 'localization\retained-terms.json'
-$FormRenderReview = Join-Path $Root 'localization\form-render-review.json'
+$FormRenderReview = Join-Path $Root 'localization\form-render-v016-review.json'
 # The v0.1.4 editorial receipt is immutable evidence for the baseline, not v0.1.5.
 $EditorialBaselineStoryHash = '2c7afd169a941ddd43bfb661c3b211b12e53066d5a2e7b60f1a0dd8041a1f46b'
 $OutRoot = Join-Path $Root 'dist'
@@ -32,7 +34,8 @@ $Archive = Join-Path $OutRoot "Purgatory-RU-$Version.zip"
 
 foreach ($required in @($SourceZip, $PluginDll, $Story, $UiReport, $SummaryReport, $RenownReport,
         $EditorialReport, $NamePolicy, $NameForms, $NameFragments, $NameAudit, $NameReport, $FormsReport,
-        $NameContinuationsReport, $RetainedTerms, $FormRenderReview, $UiStrings, $UiCoverageReview)) {
+        $NameContinuationsReport, $RetainedTerms, $FormRenderReview, $UiStrings, $UiCoverageReview,
+        $NameAuditBaseline, $ReleaseDeltaReview)) {
     if (!(Test-Path -LiteralPath $required)) { throw "Required file missing: $required" }
 }
 $Python = Join-Path $Root '.venv\Scripts\python.exe'
@@ -75,6 +78,14 @@ if (!$editorialQa.complete -or !$editorialQa.applied -or
 }
 $nameFormsQa = Get-Content -Raw -Encoding UTF8 -LiteralPath $NameForms | ConvertFrom-Json
 $nameAuditQa = Get-Content -Raw -Encoding UTF8 -LiteralPath $NameAudit | ConvertFrom-Json
+$deltaQa = Get-Content -Raw -Encoding UTF8 -LiteralPath $ReleaseDeltaReview | ConvertFrom-Json
+if ($nameAuditQa.baseline_review_sha256 -ne (Get-FileHash $NameAuditBaseline).Hash -or
+    $nameAuditQa.delta_review_sha256 -ne (Get-FileHash $ReleaseDeltaReview).Hash -or
+    $deltaQa.complete -ne $true -or $deltaQa.story_sha256 -ne $storyHash -or
+    $deltaQa.name_identity_order_and_forms_unchanged -ne $true -or
+    $deltaQa.changed_unique_ids -ne 37 -or $deltaQa.changed_occurrences -ne 44) {
+    throw 'The current name audit must inherit the frozen v0.1.5 review through the exact reviewed v0.1.6 delta.'
+}
 $nameItems = @($nameFormsQa.items)
 $nameSlots = 0
 foreach ($item in $nameItems) { $nameSlots += @($item.forms).Count }
@@ -158,6 +169,8 @@ Copy-Item -LiteralPath $EditorialReport -Destination (Join-Path $Stage 'EDITORIA
 Copy-Item -LiteralPath $NameForms -Destination (Join-Path $Stage 'NAME-FORMS.json') -Force
 Copy-Item -LiteralPath $NameFragments -Destination (Join-Path $Stage 'NAME-FRAGMENTS.json') -Force
 Copy-Item -LiteralPath $NameAudit -Destination (Join-Path $Stage 'NAME-REVIEW-AUDIT.json') -Force
+Copy-Item -LiteralPath $NameAuditBaseline -Destination (Join-Path $Stage 'NAME-REVIEW-BASELINE-v015.json') -Force
+Copy-Item -LiteralPath $ReleaseDeltaReview -Destination (Join-Path $Stage 'RELEASE-DELTA-QA.json') -Force
 Copy-Item -LiteralPath $FormRenderReview -Destination (Join-Path $Stage 'FORM-RENDER-QA.json') -Force
 Copy-Item -LiteralPath $RetainedTerms -Destination (Join-Path $Stage 'RETAINED-TERMS.json') -Force
 Copy-Item -LiteralPath $NameContinuationsReport -Destination (Join-Path $Stage 'NAME-CONTINUATIONS-QA.json') -Force
